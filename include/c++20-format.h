@@ -1210,18 +1210,18 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
   // Decide how 128-bit floating-point types should be formatted (or not).
   // When supported, the typedef CXX20_FORMAT_DECORATE_NAME(__format)::__float128_t is the type that
   // format arguments should be converted to for storage in basic_format_arg.
-  // Define the macro _GLIBCXX_FORMAT_F128 to say they're supported.
-  // _GLIBCXX_FORMAT_F128=1 means __float128, _Float128 etc. will be formatted
+  // Define the macro CXX20_FORMAT_FORMAT_F128 to say they're supported.
+  // CXX20_FORMAT_FORMAT_F128=1 means __float128, _Float128 etc. will be formatted
   // by converting them to long double (or __ieee128 for powerpc64le).
-  // _GLIBCXX_FORMAT_F128=2 means basic_format_arg needs to enable explicit
+  // CXX20_FORMAT_FORMAT_F128=2 means basic_format_arg needs to enable explicit
   // support for _Float128, rather than formatting it as another type.
-#undef _GLIBCXX_FORMAT_F128
+#undef CXX20_FORMAT_FORMAT_F128
 
 #ifdef _GLIBCXX_LONG_DOUBLE_ALT128_COMPAT
 
   // Format 128-bit floating-point types using __ieee128.
   using __float128_t = __ieee128;
-# define _GLIBCXX_FORMAT_F128 1
+# define CXX20_FORMAT_FORMAT_F128 1
 
 #ifdef __LONG_DOUBLE_IEEE128__
   // These overloads exist in the library, but are not declared.
@@ -1255,13 +1255,13 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
 
   // Format 128-bit floating-point types using long double.
   using __float128_t = long double;
-# define _GLIBCXX_FORMAT_F128 1
+# define CXX20_FORMAT_FORMAT_F128 1
 
 #elif __FLT128_DIG__ && defined(_GLIBCXX_HAVE_FLOAT128_MATH)
 
   // Format 128-bit floating-point types using _Float128.
   using __float128_t = _Float128;
-# define _GLIBCXX_FORMAT_F128 2
+# define CXX20_FORMAT_FORMAT_F128 2
 
 # if __cplusplus == 202002L
   // These overloads exist in the library, but are not declared for C++20.
@@ -2055,9 +2055,9 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
 
 // _GLIBCXX_RESOLVE_LIB_DEFECTS
 // P2510R3 Formatting pointers
-#define _GLIBCXX_P2518R3 (__cplusplus > 202302L || ! defined __STRICT_ANSI__)
+#define CXX20_P2518R3 (__cplusplus > 202302L || ! defined __STRICT_ANSI__)
 
-#if _GLIBCXX_P2518R3
+#if CXX20_P2518R3
 	__first = __spec._M_parse_zero_fill(__first, __last);
 	if (__finished())
 	  return __first;
@@ -2069,7 +2069,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
 	  {
 	    if (*__first == 'p')
 	      ++__first;
-#if _GLIBCXX_P2518R3
+#if CXX20_P2518R3
 	    else if (*__first == 'P')
 	    {
 	      // _GLIBCXX_RESOLVE_LIB_DEFECTS
@@ -2097,7 +2097,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
 	  int __n = __ptr - __buf;
 	  __buf[0] = '0';
 	  __buf[1] = 'x';
-#if _GLIBCXX_P2518R3
+#if CXX20_P2518R3
 	  if (_M_spec._M_type == CXX20_FORMAT_DECORATE_NAME(__format)::_Pres_P)
 	    {
 	      __buf[1] = 'X';
@@ -2122,7 +2122,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
 	      __str = wstring_view(__p, __n);
 	    }
 
-#if _GLIBCXX_P2518R3
+#if CXX20_P2518R3
 	  if (_M_spec._M_zero_fill)
 	    {
 	      size_t __width = _M_spec._M_get_width(__fc);
@@ -2660,7 +2660,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
 #ifdef _GLIBCXX_LONG_DOUBLE_ALT128_COMPAT
 	__ieee128 _M_f128;
 	__ibm128  _M_ibm128;
-#elif _GLIBCXX_FORMAT_F128 == 2
+#elif CXX20_FORMAT_FORMAT_F128 == 2
 	__float128_t _M_f128;
 #endif
       };
@@ -2716,7 +2716,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
 	  else if constexpr (is_same_v<_Tp, unsigned __int128>)
 	    return __u._M_u128;
 #endif
-#if _GLIBCXX_FORMAT_F128 == 2
+#if CXX20_FORMAT_FORMAT_F128 == 2
 	  else if constexpr (is_same_v<_Tp, __float128_t>)
 	    return __u._M_f128;
 #endif
@@ -2903,7 +2903,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
 	    return type_identity<_Float64>();
 # endif
 #endif
-#if _GLIBCXX_FORMAT_F128
+#if CXX20_FORMAT_FORMAT_F128
 # if __FLT128_DIG__
 	  else if constexpr (is_same_v<_Td, _Float128>)
 	    return type_identity<CXX20_FORMAT_DECORATE_NAME(__format)::__float128_t>();
@@ -2988,7 +2988,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
 	  else if constexpr (is_same_v<_Tp, _Float64>)
 	    return _Arg_f64;
 #endif
-#if _GLIBCXX_FORMAT_F128 == 2
+#if CXX20_FORMAT_FORMAT_F128 == 2
 	  else if constexpr (is_same_v<_Tp, CXX20_FORMAT_DECORATE_NAME(__format)::__float128_t>)
 	    return _Arg_f128;
 #endif
@@ -3079,7 +3079,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
 #endif
 	      // TODO _Arg_f16 etc.
 
-#if _GLIBCXX_FORMAT_F128 == 2
+#if CXX20_FORMAT_FORMAT_F128 == 2
 	    case _Arg_f128:
 	      return std::forward<_Visitor>(__vis)(_M_val._M_f128);
 #endif

@@ -356,38 +356,38 @@ namespace CXX20_FORMAT_DECORATE_NAME(__detail)
       }
     }
 
-#define _GLIBCXX_TO_CHARS(T) \
+#define CXX20_FORMAT_TO_CHARS(T) \
   _GLIBCXX23_CONSTEXPR inline to_chars_result \
   to_chars(char* __first, char* __last, T __value, int __base = 10) \
   { return std::CXX20_FORMAT_NAMESPACE::__to_chars_i<T>(__first, __last, __value, __base); }
-_GLIBCXX_TO_CHARS(char)
-_GLIBCXX_TO_CHARS(signed char)
-_GLIBCXX_TO_CHARS(unsigned char)
-_GLIBCXX_TO_CHARS(signed short)
-_GLIBCXX_TO_CHARS(unsigned short)
-_GLIBCXX_TO_CHARS(signed int)
-_GLIBCXX_TO_CHARS(unsigned int)
-_GLIBCXX_TO_CHARS(signed long)
-_GLIBCXX_TO_CHARS(unsigned long)
-_GLIBCXX_TO_CHARS(signed long long)
-_GLIBCXX_TO_CHARS(unsigned long long)
+CXX20_FORMAT_TO_CHARS(char)
+CXX20_FORMAT_TO_CHARS(signed char)
+CXX20_FORMAT_TO_CHARS(unsigned char)
+CXX20_FORMAT_TO_CHARS(signed short)
+CXX20_FORMAT_TO_CHARS(unsigned short)
+CXX20_FORMAT_TO_CHARS(signed int)
+CXX20_FORMAT_TO_CHARS(unsigned int)
+CXX20_FORMAT_TO_CHARS(signed long)
+CXX20_FORMAT_TO_CHARS(unsigned long)
+CXX20_FORMAT_TO_CHARS(signed long long)
+CXX20_FORMAT_TO_CHARS(unsigned long long)
 #if defined(__GLIBCXX_TYPE_INT_N_0)
-_GLIBCXX_TO_CHARS(signed __GLIBCXX_TYPE_INT_N_0)
-_GLIBCXX_TO_CHARS(unsigned __GLIBCXX_TYPE_INT_N_0)
+CXX20_FORMAT_TO_CHARS(signed __GLIBCXX_TYPE_INT_N_0)
+CXX20_FORMAT_TO_CHARS(unsigned __GLIBCXX_TYPE_INT_N_0)
 #endif
 #if defined(__GLIBCXX_TYPE_INT_N_1)
-_GLIBCXX_TO_CHARS(signed __GLIBCXX_TYPE_INT_N_1)
-_GLIBCXX_TO_CHARS(unsigned __GLIBCXX_TYPE_INT_N_1)
+CXX20_FORMAT_TO_CHARS(signed __GLIBCXX_TYPE_INT_N_1)
+CXX20_FORMAT_TO_CHARS(unsigned __GLIBCXX_TYPE_INT_N_1)
 #endif
 #if defined(__GLIBCXX_TYPE_INT_N_2)
-_GLIBCXX_TO_CHARS(signed __GLIBCXX_TYPE_INT_N_2)
-_GLIBCXX_TO_CHARS(unsigned __GLIBCXX_TYPE_INT_N_2)
+CXX20_FORMAT_TO_CHARS(signed __GLIBCXX_TYPE_INT_N_2)
+CXX20_FORMAT_TO_CHARS(unsigned __GLIBCXX_TYPE_INT_N_2)
 #endif
 #if defined(__GLIBCXX_TYPE_INT_N_3)
-_GLIBCXX_TO_CHARS(signed __GLIBCXX_TYPE_INT_N_3)
-_GLIBCXX_TO_CHARS(unsigned __GLIBCXX_TYPE_INT_N_3)
+CXX20_FORMAT_TO_CHARS(signed __GLIBCXX_TYPE_INT_N_3)
+CXX20_FORMAT_TO_CHARS(unsigned __GLIBCXX_TYPE_INT_N_3)
 #endif
-#undef _GLIBCXX_TO_CHARS
+#undef CXX20_FORMAT_TO_CHARS
 
   // _GLIBCXX_RESOLVE_LIB_DEFECTS
   // 3266. to_chars(bool) should be deleted
