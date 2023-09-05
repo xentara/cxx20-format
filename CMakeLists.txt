@@ -119,14 +119,14 @@ set_target_properties(
 # for functional tests
 
 add_executable(
-	format-test
+	${PROJECT_NAME}-test
 	
 	"test/format-test.cc"
 )
 
-target_link_libraries(format-test PRIVATE ${PROJECT_NAME})
+target_link_libraries(${PROJECT_NAME}-test PRIVATE ${PROJECT_NAME})
 
-set_property(TARGET format-test APPEND PROPERTY BUILD_RPATH "$ORIGIN")
+set_property(TARGET ${PROJECT_NAME}-test APPEND PROPERTY BUILD_RPATH "$ORIGIN")
 
 ###########################################################################
 # define the headers and directories
