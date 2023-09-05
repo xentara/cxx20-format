@@ -20,10 +20,10 @@
 // see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
 // <http://www.gnu.org/licenses/>.
 
-#ifndef CHARCONV_FLOAT_CHARCONV
-#define	CHARCONV_FLOAT_CHARCONV
+#ifndef CXX20_FORMAT_FORMAT
+#define	CXX20_FORMAT_FORMAT
 
-#include_next <charconv>
-#include <charconv-float.h>
+#include_next <format>
+#include <c++20-format.h>
 
-#endif // CHARCONV_FLOAT_CHARCONV
+#endif // CXX20_FORMAT_FORMAT
