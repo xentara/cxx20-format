@@ -1,4 +1,7 @@
 This library contains an implementation of the C++20 std::format facility with
 its related functionality. It is meant meant as a substitute for the C++20
-header <format> for libstdc++ from gcc-12 and earlier, where it is missing.
-The implementation is simply backported from gcc-13.
+header <format> for libstdc++ from gcc-12, where it is missing. The
+implementation is simply backported from gcc-13.
+
+The implementation does not include formatters for std::chrono, as those
+are dependent on the calendar facility, which is also missing. 
