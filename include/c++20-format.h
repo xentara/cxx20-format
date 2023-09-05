@@ -22,8 +22,8 @@
 // see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
 // <http://www.gnu.org/licenses/>.
 
-#ifndef CXX20_FORMAT_FORMAT
-#define CXX20_FORMAT_FORMAT 1
+#ifndef CXX20_FORMAT_H
+#define CXX20_FORMAT_H 1
 
 #include <bits/c++20-format/global.h>
 
@@ -4004,4 +4004,4 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
 } // namespace CXX20_FORMAT_NAMESPACE
 } // namespace std
 #endif // C++20
-#endif // CXX20_FORMAT_FORMAT
+#endif // CXX20_FORMAT_H

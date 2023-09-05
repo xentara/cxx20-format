@@ -23,7 +23,6 @@
 #ifndef CXX20_FORMAT_FORMAT
 #define	CXX20_FORMAT_FORMAT
 
-#include_next <format>
 #include <c++20-format.h>
 
 #endif // CXX20_FORMAT_FORMAT
