@@ -80,6 +80,14 @@ target_include_directories(
 		"$<INSTALL_INTERFACE:include/c++20-format>"
 )
 
+target_compile_options(
+	${PROJECT_NAME}
+
+	PRIVATE
+		$<$<CXX_COMPILER_ID:GNU,Clang>:-fsized-deallocation>
+		$<$<CXX_COMPILER_ID:GNU,Clang>:-Wno-old-style-cast>
+)
+
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_20)
 
 if(PATCH_STD_HEADERS)
