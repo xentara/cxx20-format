@@ -1201,7 +1201,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
       template<typename _Int>
 	static to_chars_result
 	to_chars(char* __first, char* __last, _Int __value, int __base)
-	{ return std::__to_chars_i<_Int>(__first, __last, __value, __base); }
+	{ return std::CXX20_FORMAT_NAMESPACE::__to_chars_i<_Int>(__first, __last, __value, __base); }
 #endif
 
       _Spec<_CharT> _M_spec{};
