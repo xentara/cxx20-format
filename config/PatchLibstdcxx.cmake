@@ -20,12 +20,12 @@
 # see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
 # <http://www.gnu.org/licenses/>.POSIX
 
-if(NOT TARGET Cxx20Concurrency::libstdcxx-patch)
+if(NOT TARGET Cxx20Format::libstdcxx-patch)
 
 try_compile(
 	_CXX20_FORMAT_PATCH_LIBSTDCXX
 
-	"${CMAKE_CURRENT_BINARY_DIR}/Cxx20Concurrency"
+	"${CMAKE_CURRENT_BINARY_DIR}/Cxx20Format"
 	"${CMAKE_CURRENT_LIST_DIR}/check_libstdcxx_version.cc"
 )
 
@@ -34,23 +34,23 @@ if(_CXX20_FORMAT_PATCH_LIBSTDCXX)
 	try_compile(
 		_CXX20_FORMAT_PATCH_STD_HEADERS
 
-		"${CMAKE_CURRENT_BINARY_DIR}/Cxx20Concurrency"
+		"${CMAKE_CURRENT_BINARY_DIR}/Cxx20Format"
 		"${CMAKE_CURRENT_LIST_DIR}/check_include_next.cc")
 
 	if(_CXX20_FORMAT_PATCH_STD_HEADERS)
-		target_include_directories(Cxx20Concurrency::c++20-concurrency INTERFACE "${_IMPORT_PREFIX}/include/c++20-concurrency/std>")
+		target_include_directories(Cxx20Format::c++20-format INTERFACE "${_IMPORT_PREFIX}/include/c++20-format/std>")
 	endif(_CXX20_FORMAT_PATCH_STD_HEADERS)
 
 	unset(_CXX20_FORMAT_PATCH_STD_HEADERS)
 
-	add_library(Cxx20Concurrency::libstdcxx-patch ALIAS Cxx20Concurrency::c++20-concurrency)
+	add_library(Cxx20Format::libstdcxx-patch ALIAS Cxx20Format::c++20-format)
 
 else(_CXX20_FORMAT_PATCH_LIBSTDCXX)
 
-	add_library(Cxx20Concurrency::libstdcxx-patch INTERFACE IMPORTED)
+	add_library(Cxx20Format::libstdcxx-patch INTERFACE IMPORTED)
 
 endif(_CXX20_FORMAT_PATCH_LIBSTDCXX)
 
 unset(_CXX20_FORMAT_PATCH_LIBSTDCXX)
 
-endif(NOT TARGET Cxx20Concurrency::libstdcxx-patch)
+endif(NOT TARGET Cxx20Format::libstdcxx-patch)
