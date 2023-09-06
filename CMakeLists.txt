@@ -137,6 +137,7 @@ set(HEADER_FILES
 )
 
 set(PRIVATE_HEADER_FILES 
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/bits/c++20-format/charconv-bits.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/bits/c++20-format/charconv.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/include/bits/c++20-format/global.h"
 	"${CONFIG_HEADER_FILE}"
