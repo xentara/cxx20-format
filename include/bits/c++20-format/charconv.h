@@ -52,26 +52,26 @@ inline namespace CXX20_FORMAT_NAMESPACE
 {
 
   /// Result type of std::to_chars
-  struct to_chars_result
+  struct CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
   {
     char* ptr;
     errc ec;
 
 #if __cplusplus > 201703L && __cpp_impl_three_way_comparison >= 201907L
     friend bool
-    operator==(const to_chars_result&, const to_chars_result&) = default;
+    operator==(const CXX20_FORMAT_DECORATE_NAME(__to_chars_result)&, const CXX20_FORMAT_DECORATE_NAME(__to_chars_result)&) = default;
 #endif
   };
 
   /// Result type of std::from_chars
-  struct from_chars_result
+  struct CXX20_FORMAT_DECORATE_NAME(__from_chars_result)
   {
     const char* ptr;
     errc ec;
 
 #if __cplusplus > 201703L && __cpp_impl_three_way_comparison >= 201907L
     friend bool
-    operator==(const from_chars_result&, const from_chars_result&) = default;
+    operator==(const CXX20_FORMAT_DECORATE_NAME(__from_chars_result)&, const CXX20_FORMAT_DECORATE_NAME(__from_chars_result)&) = default;
 #endif
   };
 
@@ -86,7 +86,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__detail)
 			  is_same<_Tp, unsigned __int128>,
 #endif
 			  is_same<char, remove_cv_t<_Tp>>>::value,
-		    to_chars_result>;
+		    CXX20_FORMAT_DECORATE_NAME(__to_chars_result)>;
 
   // Pick an unsigned type of suitable size. This is used to reduce the
   // number of specializations of __to_chars_len, __to_chars etc. that
@@ -120,12 +120,12 @@ namespace CXX20_FORMAT_DECORATE_NAME(__detail)
 
   // Generic implementation for arbitrary bases.
   template<typename _Tp>
-    constexpr to_chars_result
+    constexpr CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
     __to_chars(char* __first, char* __last, _Tp __val, int __base) noexcept
     {
       static_assert(__integer_to_chars_is_unsigned<_Tp>, "implementation bug");
 
-      to_chars_result __res;
+      CXX20_FORMAT_DECORATE_NAME(__to_chars_result) __res;
 
       const unsigned __len = __to_chars_len(__val, __base);
 
@@ -165,7 +165,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__detail)
     {
       static_assert(__integer_to_chars_is_unsigned<_Tp>, "implementation bug");
 
-      to_chars_result __res;
+      CXX20_FORMAT_DECORATE_NAME(__to_chars_result) __res;
 
       const unsigned __len = (__to_chars_len_2(__val) + 3) / 4;
 
@@ -211,7 +211,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__detail)
     {
       static_assert(__integer_to_chars_is_unsigned<_Tp>, "implementation bug");
 
-      to_chars_result __res;
+      CXX20_FORMAT_DECORATE_NAME(__to_chars_result) __res;
 
       const unsigned __len = __to_chars_len(__val, 10);
 
@@ -234,7 +234,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__detail)
     {
       static_assert(__integer_to_chars_is_unsigned<_Tp>, "implementation bug");
 
-      to_chars_result __res;
+      CXX20_FORMAT_DECORATE_NAME(__to_chars_result) __res;
       unsigned __len;
 
       if _GLIBCXX17_CONSTEXPR (__gnu_cxx::__int_traits<_Tp>::__digits <= 16)
@@ -287,7 +287,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__detail)
     {
       static_assert(__integer_to_chars_is_unsigned<_Tp>, "implementation bug");
 
-      to_chars_result __res;
+      CXX20_FORMAT_DECORATE_NAME(__to_chars_result) __res;
 
       const unsigned __len = __to_chars_len_2(__val);
 
@@ -357,7 +357,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__detail)
     }
 
 #define CXX20_FORMAT_TO_CHARS(T) \
-  _GLIBCXX23_CONSTEXPR inline to_chars_result \
+  _GLIBCXX23_CONSTEXPR inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result) \
   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, T __value, int __base = 10) \
   { return std::CXX20_FORMAT_NAMESPACE::__to_chars_i<T>(__first, __last, __value, __base); }
 CXX20_FORMAT_TO_CHARS(char)
@@ -391,7 +391,7 @@ CXX20_FORMAT_TO_CHARS(unsigned __GLIBCXX_TYPE_INT_N_3)
 
   // _GLIBCXX_RESOLVE_LIB_DEFECTS
   // 3266. to_chars(bool) should be deleted
-  to_chars_result CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, bool, int = 10) = delete;
+  CXX20_FORMAT_DECORATE_NAME(__to_chars_result) CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, bool, int = 10) = delete;
 
 namespace CXX20_FORMAT_DECORATE_NAME(__detail)
 {
@@ -550,7 +550,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__detail)
       = enable_if_t<__or_<__is_signed_integer<_Tp>,
 			  __is_unsigned_integer<_Tp>,
 			  is_same<char, remove_cv_t<_Tp>>>::value,
-		    from_chars_result>;
+		    CXX20_FORMAT_DECORATE_NAME(__from_chars_result)>;
 
 } // namespace __detail
 
@@ -562,7 +562,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__detail)
     {
       __glibcxx_assert(2 <= __base && __base <= 36);
 
-      from_chars_result __res{__first, {}};
+      CXX20_FORMAT_DECORATE_NAME(__from_chars_result) __res{__first, {}};
 
       int __sign = 1;
       if _GLIBCXX17_CONSTEXPR (std::is_signed<_Tp>::value)
@@ -625,71 +625,71 @@ namespace CXX20_FORMAT_DECORATE_NAME(__detail)
     }
 
   /// floating-point format for primitive numerical conversion
-  enum class chars_format
+  enum class CXX20_FORMAT_DECORATE_NAME(__chars_format)
   {
     scientific = 1, fixed = 2, hex = 4, general = fixed | scientific
   };
 
-  constexpr chars_format
-  operator|(chars_format __lhs, chars_format __rhs) noexcept
-  { return (chars_format)((unsigned)__lhs | (unsigned)__rhs); }
+  constexpr CXX20_FORMAT_DECORATE_NAME(__chars_format)
+  operator|(CXX20_FORMAT_DECORATE_NAME(__chars_format) __lhs, CXX20_FORMAT_DECORATE_NAME(__chars_format) __rhs) noexcept
+  { return (CXX20_FORMAT_DECORATE_NAME(__chars_format))((unsigned)__lhs | (unsigned)__rhs); }
 
-  constexpr chars_format
-  operator&(chars_format __lhs, chars_format __rhs) noexcept
-  { return (chars_format)((unsigned)__lhs & (unsigned)__rhs); }
+  constexpr CXX20_FORMAT_DECORATE_NAME(__chars_format)
+  operator&(CXX20_FORMAT_DECORATE_NAME(__chars_format) __lhs, CXX20_FORMAT_DECORATE_NAME(__chars_format) __rhs) noexcept
+  { return (CXX20_FORMAT_DECORATE_NAME(__chars_format))((unsigned)__lhs & (unsigned)__rhs); }
 
-  constexpr chars_format
-  operator^(chars_format __lhs, chars_format __rhs) noexcept
-  { return (chars_format)((unsigned)__lhs ^ (unsigned)__rhs); }
+  constexpr CXX20_FORMAT_DECORATE_NAME(__chars_format)
+  operator^(CXX20_FORMAT_DECORATE_NAME(__chars_format) __lhs, CXX20_FORMAT_DECORATE_NAME(__chars_format) __rhs) noexcept
+  { return (CXX20_FORMAT_DECORATE_NAME(__chars_format))((unsigned)__lhs ^ (unsigned)__rhs); }
 
-  constexpr chars_format
-  operator~(chars_format __fmt) noexcept
-  { return (chars_format)~(unsigned)__fmt; }
+  constexpr CXX20_FORMAT_DECORATE_NAME(__chars_format)
+  operator~(CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt) noexcept
+  { return (CXX20_FORMAT_DECORATE_NAME(__chars_format))~(unsigned)__fmt; }
 
-  constexpr chars_format&
-  operator|=(chars_format& __lhs, chars_format __rhs) noexcept
+  constexpr CXX20_FORMAT_DECORATE_NAME(__chars_format)&
+  operator|=(CXX20_FORMAT_DECORATE_NAME(__chars_format)& __lhs, CXX20_FORMAT_DECORATE_NAME(__chars_format) __rhs) noexcept
   { return __lhs = __lhs | __rhs; }
 
-  constexpr chars_format&
-  operator&=(chars_format& __lhs, chars_format __rhs) noexcept
+  constexpr CXX20_FORMAT_DECORATE_NAME(__chars_format)&
+  operator&=(CXX20_FORMAT_DECORATE_NAME(__chars_format)& __lhs, CXX20_FORMAT_DECORATE_NAME(__chars_format) __rhs) noexcept
   { return __lhs = __lhs & __rhs; }
 
-  constexpr chars_format&
-  operator^=(chars_format& __lhs, chars_format __rhs) noexcept
+  constexpr CXX20_FORMAT_DECORATE_NAME(__chars_format)&
+  operator^=(CXX20_FORMAT_DECORATE_NAME(__chars_format)& __lhs, CXX20_FORMAT_DECORATE_NAME(__chars_format) __rhs) noexcept
   { return __lhs = __lhs ^ __rhs; }
 
 #if defined __cpp_lib_to_chars || _GLIBCXX_HAVE_USELOCALE
-  from_chars_result
+  CXX20_FORMAT_DECORATE_NAME(__from_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__from_chars)(const char* __first, const char* __last, float& __value,
-	     chars_format __fmt = chars_format::general) noexcept;
+	     CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::general) noexcept;
 
-  from_chars_result
+  CXX20_FORMAT_DECORATE_NAME(__from_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__from_chars)(const char* __first, const char* __last, double& __value,
-	     chars_format __fmt = chars_format::general) noexcept;
+	     CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::general) noexcept;
 
-  from_chars_result
+  CXX20_FORMAT_DECORATE_NAME(__from_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__from_chars)(const char* __first, const char* __last, long double& __value,
-	     chars_format __fmt = chars_format::general) noexcept;
+	     CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::general) noexcept;
 
   // Library routines for 16-bit extended floating point formats
   // using float as interchange format.
-  from_chars_result
+  CXX20_FORMAT_DECORATE_NAME(__from_chars_result)
   __from_chars_float16_t(const char* __first, const char* __last,
 			 float& __value,
-			 chars_format __fmt = chars_format::general) noexcept;
-  from_chars_result
+			 CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::general) noexcept;
+  CXX20_FORMAT_DECORATE_NAME(__from_chars_result)
   __from_chars_bfloat16_t(const char* __first, const char* __last,
 			  float& __value,
-			  chars_format __fmt = chars_format::general) noexcept;
+			  CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::general) noexcept;
 
 #if defined(__STDCPP_FLOAT16_T__) && defined(_GLIBCXX_FLOAT_IS_IEEE_BINARY32) \
     && defined(__cpp_lib_to_chars)
-  inline from_chars_result
+  inline CXX20_FORMAT_DECORATE_NAME(__from_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__from_chars)(const char* __first, const char* __last, _Float16& __value,
-	     chars_format __fmt = chars_format::general) noexcept
+	     CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::general) noexcept
   {
     float __val;
-    from_chars_result __res
+    CXX20_FORMAT_DECORATE_NAME(__from_chars_result) __res
       = __from_chars_float16_t(__first, __last, __val, __fmt);
     if (__res.ec == errc{})
       __value = __val;
@@ -698,12 +698,12 @@ namespace CXX20_FORMAT_DECORATE_NAME(__detail)
 #endif
 
 #if defined(__STDCPP_FLOAT32_T__) && defined(_GLIBCXX_FLOAT_IS_IEEE_BINARY32)
-  inline from_chars_result
+  inline CXX20_FORMAT_DECORATE_NAME(__from_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__from_chars)(const char* __first, const char* __last, _Float32& __value,
-	     chars_format __fmt = chars_format::general) noexcept
+	     CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::general) noexcept
   {
     float __val;
-    from_chars_result __res = CXX20_FORMAT_DECORATE_NAME(__from_chars)(__first, __last, __val, __fmt);
+    CXX20_FORMAT_DECORATE_NAME(__from_chars_result) __res = CXX20_FORMAT_DECORATE_NAME(__from_chars)(__first, __last, __val, __fmt);
     if (__res.ec == errc{})
       __value = __val;
     return __res;
@@ -711,12 +711,12 @@ namespace CXX20_FORMAT_DECORATE_NAME(__detail)
 #endif
 
 #if defined(__STDCPP_FLOAT64_T__) && defined(_GLIBCXX_DOUBLE_IS_IEEE_BINARY64)
-  inline from_chars_result
+  inline CXX20_FORMAT_DECORATE_NAME(__from_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__from_chars)(const char* __first, const char* __last, _Float64& __value,
-	     chars_format __fmt = chars_format::general) noexcept
+	     CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::general) noexcept
   {
     double __val;
-    from_chars_result __res = CXX20_FORMAT_DECORATE_NAME(__from_chars)(__first, __last, __val, __fmt);
+    CXX20_FORMAT_DECORATE_NAME(__from_chars_result) __res = CXX20_FORMAT_DECORATE_NAME(__from_chars)(__first, __last, __val, __fmt);
     if (__res.ec == errc{})
       __value = __val;
     return __res;
@@ -724,48 +724,48 @@ namespace CXX20_FORMAT_DECORATE_NAME(__detail)
 #endif
 
 #if defined(__STDCPP_FLOAT128_T__) && defined(_GLIBCXX_LDOUBLE_IS_IEEE_BINARY128)
-  inline from_chars_result
+  inline CXX20_FORMAT_DECORATE_NAME(__from_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__from_chars)(const char* __first, const char* __last, _Float128& __value,
-	     chars_format __fmt = chars_format::general) noexcept
+	     CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::general) noexcept
   {
     long double __val;
-    from_chars_result __res = CXX20_FORMAT_DECORATE_NAME(__from_chars)(__first, __last, __val, __fmt);
+    CXX20_FORMAT_DECORATE_NAME(__from_chars_result) __res = CXX20_FORMAT_DECORATE_NAME(__from_chars)(__first, __last, __val, __fmt);
     if (__res.ec == errc{})
       __value = __val;
     return __res;
   }
 #elif defined(__STDCPP_FLOAT128_T__) && defined(_GLIBCXX_HAVE_FLOAT128_MATH)
 #ifdef _GLIBCXX_LONG_DOUBLE_ALT128_COMPAT
-  __extension__ from_chars_result
+  __extension__ CXX20_FORMAT_DECORATE_NAME(__from_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__from_chars)(const char* __first, const char* __last, __ieee128& __value,
-	     chars_format __fmt = chars_format::general) noexcept;
+	     CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::general) noexcept;
 
-  inline from_chars_result
+  inline CXX20_FORMAT_DECORATE_NAME(__from_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__from_chars)(const char* __first, const char* __last, _Float128& __value,
-	     chars_format __fmt = chars_format::general) noexcept
+	     CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::general) noexcept
   {
     __extension__ __ieee128 __val;
-    from_chars_result __res = CXX20_FORMAT_DECORATE_NAME(__from_chars)(__first, __last, __val, __fmt);
+    CXX20_FORMAT_DECORATE_NAME(__from_chars_result) __res = CXX20_FORMAT_DECORATE_NAME(__from_chars)(__first, __last, __val, __fmt);
     if (__res.ec == errc{})
       __value = __val;
     return __res;
   }
 #else
-  from_chars_result
+  CXX20_FORMAT_DECORATE_NAME(__from_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__from_chars)(const char* __first, const char* __last, _Float128& __value,
-	     chars_format __fmt = chars_format::general) noexcept;
+	     CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::general) noexcept;
 #endif
 #endif
 
 #if defined(__STDCPP_BFLOAT16_T__) && defined(_GLIBCXX_FLOAT_IS_IEEE_BINARY32) \
     && defined(__cpp_lib_to_chars)
-  inline from_chars_result
+  inline CXX20_FORMAT_DECORATE_NAME(__from_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__from_chars)(const char* __first, const char* __last,
 	     __gnu_cxx::__bfloat16_t & __value,
-	     chars_format __fmt = chars_format::general) noexcept
+	     CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::general) noexcept
   {
     float __val;
-    from_chars_result __res
+    CXX20_FORMAT_DECORATE_NAME(__from_chars_result) __res
       = __from_chars_bfloat16_t(__first, __last, __val, __fmt);
     if (__res.ec == errc{})
       __value = __val;
@@ -778,126 +778,126 @@ namespace CXX20_FORMAT_DECORATE_NAME(__detail)
   // Floating-point std::to_chars
 
   // Overloads for float.
-  to_chars_result CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, float __value) noexcept;
-  to_chars_result CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, float __value,
-			   chars_format __fmt) noexcept;
-  to_chars_result CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, float __value,
-			   chars_format __fmt, int __precision) noexcept;
+  CXX20_FORMAT_DECORATE_NAME(__to_chars_result) CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, float __value) noexcept;
+  CXX20_FORMAT_DECORATE_NAME(__to_chars_result) CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, float __value,
+			   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt) noexcept;
+  CXX20_FORMAT_DECORATE_NAME(__to_chars_result) CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, float __value,
+			   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt, int __precision) noexcept;
 
   // Overloads for double.
-  to_chars_result CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, double __value) noexcept;
-  to_chars_result CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, double __value,
-			   chars_format __fmt) noexcept;
-  to_chars_result CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, double __value,
-			   chars_format __fmt, int __precision) noexcept;
+  CXX20_FORMAT_DECORATE_NAME(__to_chars_result) CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, double __value) noexcept;
+  CXX20_FORMAT_DECORATE_NAME(__to_chars_result) CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, double __value,
+			   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt) noexcept;
+  CXX20_FORMAT_DECORATE_NAME(__to_chars_result) CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, double __value,
+			   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt, int __precision) noexcept;
 
   // Overloads for long double.
-  to_chars_result CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, long double __value)
+  CXX20_FORMAT_DECORATE_NAME(__to_chars_result) CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, long double __value)
     noexcept;
-  to_chars_result CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, long double __value,
-			   chars_format __fmt) noexcept;
-  to_chars_result CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, long double __value,
-			   chars_format __fmt, int __precision) noexcept;
+  CXX20_FORMAT_DECORATE_NAME(__to_chars_result) CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, long double __value,
+			   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt) noexcept;
+  CXX20_FORMAT_DECORATE_NAME(__to_chars_result) CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, long double __value,
+			   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt, int __precision) noexcept;
 
   // Library routines for 16-bit extended floating point formats
   // using float as interchange format.
-  to_chars_result __to_chars_float16_t(char* __first, char* __last,
+  CXX20_FORMAT_DECORATE_NAME(__to_chars_result) __to_chars_float16_t(char* __first, char* __last,
 				       float __value,
-				       chars_format __fmt) noexcept;
-  to_chars_result __to_chars_bfloat16_t(char* __first, char* __last,
+				       CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt) noexcept;
+  CXX20_FORMAT_DECORATE_NAME(__to_chars_result) __to_chars_bfloat16_t(char* __first, char* __last,
 					float __value,
-					chars_format __fmt) noexcept;
+					CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt) noexcept;
 
 #if defined(__STDCPP_FLOAT16_T__) && defined(_GLIBCXX_FLOAT_IS_IEEE_BINARY32)
-  inline to_chars_result
+  inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float16 __value) noexcept
   {
     return __to_chars_float16_t(__first, __last, float(__value),
-				chars_format{});
+				CXX20_FORMAT_DECORATE_NAME(__chars_format){});
   }
-  inline to_chars_result
+  inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float16 __value,
-	   chars_format __fmt) noexcept
+	   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt) noexcept
   { return __to_chars_float16_t(__first, __last, float(__value), __fmt); }
-  inline to_chars_result
+  inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float16 __value,
-	   chars_format __fmt, int __precision) noexcept
+	   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt, int __precision) noexcept
   { return CXX20_FORMAT_DECORATE_NAME(__to_chars)(__first, __last, float(__value), __fmt, __precision); }
 #endif
 
 #if defined(__STDCPP_FLOAT32_T__) && defined(_GLIBCXX_FLOAT_IS_IEEE_BINARY32)
-  inline to_chars_result
+  inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float32 __value) noexcept
   { return CXX20_FORMAT_DECORATE_NAME(__to_chars)(__first, __last, float(__value)); }
-  inline to_chars_result
+  inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float32 __value,
-	   chars_format __fmt) noexcept
+	   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt) noexcept
   { return CXX20_FORMAT_DECORATE_NAME(__to_chars)(__first, __last, float(__value), __fmt); }
-  inline to_chars_result
+  inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float32 __value,
-	   chars_format __fmt, int __precision) noexcept
+	   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt, int __precision) noexcept
   { return CXX20_FORMAT_DECORATE_NAME(__to_chars)(__first, __last, float(__value), __fmt, __precision); }
 #endif
 
 #if defined(__STDCPP_FLOAT64_T__) && defined(_GLIBCXX_DOUBLE_IS_IEEE_BINARY64)
-  inline to_chars_result
+  inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float64 __value) noexcept
   { return CXX20_FORMAT_DECORATE_NAME(__to_chars)(__first, __last, double(__value)); }
-  inline to_chars_result
+  inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float64 __value,
-	   chars_format __fmt) noexcept
+	   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt) noexcept
   { return CXX20_FORMAT_DECORATE_NAME(__to_chars)(__first, __last, double(__value), __fmt); }
-  inline to_chars_result
+  inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float64 __value,
-	   chars_format __fmt, int __precision) noexcept
+	   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt, int __precision) noexcept
   { return CXX20_FORMAT_DECORATE_NAME(__to_chars)(__first, __last, double(__value), __fmt, __precision); }
 #endif
 
 #if defined(__STDCPP_FLOAT128_T__) && defined(_GLIBCXX_LDOUBLE_IS_IEEE_BINARY128)
-  inline to_chars_result
+  inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float128 __value) noexcept
   { return CXX20_FORMAT_DECORATE_NAME(__to_chars)(__first, __last, static_cast<long double>(__value)); }
-  inline to_chars_result
+  inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float128 __value,
-	   chars_format __fmt) noexcept
+	   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt) noexcept
   {
     return CXX20_FORMAT_DECORATE_NAME(__to_chars)(__first, __last, static_cast<long double>(__value), __fmt);
   }
-  inline to_chars_result
+  inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float128 __value,
-	   chars_format __fmt, int __precision) noexcept
+	   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt, int __precision) noexcept
   {
     return CXX20_FORMAT_DECORATE_NAME(__to_chars)(__first, __last, static_cast<long double>(__value), __fmt,
 		    __precision);
   }
 #elif defined(__STDCPP_FLOAT128_T__) && defined(_GLIBCXX_HAVE_FLOAT128_MATH)
 #ifdef _GLIBCXX_LONG_DOUBLE_ALT128_COMPAT
-  __extension__ to_chars_result
+  __extension__ CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, __float128 __value) noexcept;
-  __extension__ to_chars_result
+  __extension__ CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, __float128 __value,
-	   chars_format __fmt) noexcept;
-  __extension__ to_chars_result
+	   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt) noexcept;
+  __extension__ CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, __float128 __value,
-	   chars_format __fmt, int __precision) noexcept;
+	   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt, int __precision) noexcept;
 
-  inline to_chars_result
+  inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float128 __value) noexcept
   {
     return __extension__ CXX20_FORMAT_DECORATE_NAME(__to_chars)(__first, __last,
 				  static_cast<__float128>(__value));
   }
-  inline to_chars_result
+  inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float128 __value,
-	   chars_format __fmt) noexcept
+	   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt) noexcept
   {
 
     return __extension__ CXX20_FORMAT_DECORATE_NAME(__to_chars)(__first, __last,
 				  static_cast<__float128>(__value), __fmt);
   }
-  inline to_chars_result
+  inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float128 __value,
-	   chars_format __fmt, int __precision) noexcept
+	   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt, int __precision) noexcept
   {
 
     return __extension__ CXX20_FORMAT_DECORATE_NAME(__to_chars)(__first, __last,
@@ -905,30 +905,30 @@ namespace CXX20_FORMAT_DECORATE_NAME(__detail)
 				  __precision);
   }
 #else
-  to_chars_result CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float128 __value)
+  CXX20_FORMAT_DECORATE_NAME(__to_chars_result) CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float128 __value)
     noexcept;
-  to_chars_result CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float128 __value,
-			   chars_format __fmt) noexcept;
-  to_chars_result CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float128 __value,
-			   chars_format __fmt, int __precision) noexcept;
+  CXX20_FORMAT_DECORATE_NAME(__to_chars_result) CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float128 __value,
+			   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt) noexcept;
+  CXX20_FORMAT_DECORATE_NAME(__to_chars_result) CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float128 __value,
+			   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt, int __precision) noexcept;
 #endif
 #endif
 
 #if defined(__STDCPP_BFLOAT16_T__) && defined(_GLIBCXX_FLOAT_IS_IEEE_BINARY32)
-  inline to_chars_result
+  inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last,
 	   __gnu_cxx::__bfloat16_t __value) noexcept
   {
     return __to_chars_bfloat16_t(__first, __last, float(__value),
-				 chars_format{});
+				 CXX20_FORMAT_DECORATE_NAME(__chars_format){});
   }
-  inline to_chars_result
+  inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, __gnu_cxx::__bfloat16_t __value,
-	   chars_format __fmt) noexcept
+	   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt) noexcept
   { return __to_chars_bfloat16_t(__first, __last, float(__value), __fmt); }
-  inline to_chars_result
+  inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, __gnu_cxx::__bfloat16_t __value,
-	   chars_format __fmt, int __precision) noexcept
+	   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt, int __precision) noexcept
   { return CXX20_FORMAT_DECORATE_NAME(__to_chars)(__first, __last, float(__value), __fmt, __precision); }
 #endif
 #endif

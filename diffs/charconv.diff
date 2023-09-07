@@ -34,14 +34,58 @@
 > inline namespace CXX20_FORMAT_NAMESPACE
 59d52
 < _GLIBCXX_BEGIN_NAMESPACE_VERSION
+62c55
+<   struct to_chars_result
+---
+>   struct CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
+69c62
+<     operator==(const to_chars_result&, const to_chars_result&) = default;
+---
+>     operator==(const CXX20_FORMAT_DECORATE_NAME(__to_chars_result)&, const CXX20_FORMAT_DECORATE_NAME(__to_chars_result)&) = default;
+74c67
+<   struct from_chars_result
+---
+>   struct CXX20_FORMAT_DECORATE_NAME(__from_chars_result)
+81c74
+<     operator==(const from_chars_result&, const from_chars_result&) = default;
+---
+>     operator==(const CXX20_FORMAT_DECORATE_NAME(__from_chars_result)&, const CXX20_FORMAT_DECORATE_NAME(__from_chars_result)&) = default;
 85c78
 < namespace __detail
 ---
 > namespace CXX20_FORMAT_DECORATE_NAME(__detail)
+96c89
+< 		    to_chars_result>;
+---
+> 		    CXX20_FORMAT_DECORATE_NAME(__to_chars_result)>;
+130c123
+<     constexpr to_chars_result
+---
+>     constexpr CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
+135c128
+<       to_chars_result __res;
+---
+>       CXX20_FORMAT_DECORATE_NAME(__to_chars_result) __res;
+175c168
+<       to_chars_result __res;
+---
+>       CXX20_FORMAT_DECORATE_NAME(__to_chars_result) __res;
+221c214
+<       to_chars_result __res;
+---
+>       CXX20_FORMAT_DECORATE_NAME(__to_chars_result) __res;
 232c225
 <       __detail::__to_chars_10_impl(__first, __len, __val);
 ---
 >       CXX20_FORMAT_DECORATE_NAME(__detail)::__to_chars_10_impl(__first, __len, __val);
+244c237
+<       to_chars_result __res;
+---
+>       CXX20_FORMAT_DECORATE_NAME(__to_chars_result) __res;
+297c290
+<       to_chars_result __res;
+---
+>       CXX20_FORMAT_DECORATE_NAME(__to_chars_result) __res;
 328c321
 <     constexpr __detail::__integer_to_chars_result_type<_Tp>
 ---
@@ -70,11 +114,9 @@
 < 	return __detail::__to_chars(__first, __last, __unsigned_val, __base);
 ---
 > 	return CXX20_FORMAT_DECORATE_NAME(__detail)::__to_chars(__first, __last, __unsigned_val, __base);
-366c359
+366,380c359,373
 < #define _GLIBCXX_TO_CHARS(T) \
----
-> #define CXX20_FORMAT_TO_CHARS(T) \
-368,380c361,373
+<   _GLIBCXX23_CONSTEXPR inline to_chars_result \
 <   to_chars(char* __first, char* __last, T __value, int __base = 10) \
 <   { return std::__to_chars_i<T>(__first, __last, __value, __base); }
 < _GLIBCXX_TO_CHARS(char)
@@ -89,6 +131,8 @@
 < _GLIBCXX_TO_CHARS(signed long long)
 < _GLIBCXX_TO_CHARS(unsigned long long)
 ---
+> #define CXX20_FORMAT_TO_CHARS(T) \
+>   _GLIBCXX23_CONSTEXPR inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result) \
 >   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, T __value, int __base = 10) \
 >   { return std::CXX20_FORMAT_NAMESPACE::__to_chars_i<T>(__first, __last, __value, __base); }
 > CXX20_FORMAT_TO_CHARS(char)
@@ -133,17 +177,25 @@
 401c394
 <   to_chars_result to_chars(char*, char*, bool, int = 10) = delete;
 ---
->   to_chars_result CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, bool, int = 10) = delete;
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars_result) CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, bool, int = 10) = delete;
 403c396
 < namespace __detail
 ---
 > namespace CXX20_FORMAT_DECORATE_NAME(__detail)
+560c553
+< 		    from_chars_result>;
+---
+> 		    CXX20_FORMAT_DECORATE_NAME(__from_chars_result)>;
 566,567c559,560
 <     _GLIBCXX23_CONSTEXPR __detail::__integer_from_chars_result_type<_Tp>
 <     from_chars(const char* __first, const char* __last, _Tp& __value,
 ---
 >     _GLIBCXX23_CONSTEXPR CXX20_FORMAT_DECORATE_NAME(__detail)::__integer_from_chars_result_type<_Tp>
 >     CXX20_FORMAT_DECORATE_NAME(__from_chars)(const char* __first, const char* __last, _Tp& __value,
+572c565
+<       from_chars_result __res{__first, {}};
+---
+>       CXX20_FORMAT_DECORATE_NAME(__from_chars_result) __res{__first, {}};
 582c575
 <       using _Up = __detail::__unsigned_least_t<_Tp>;
 ---
@@ -164,212 +216,394 @@
 < 	__valid = __detail::__from_chars_alnum<false>(__first, __last, __val, __base);
 ---
 > 	__valid = CXX20_FORMAT_DECORATE_NAME(__detail)::__from_chars_alnum<false>(__first, __last, __val, __base);
-670c663
+635c628
+<   enum class chars_format
+---
+>   enum class CXX20_FORMAT_DECORATE_NAME(__chars_format)
+640,654c633,647
+<   constexpr chars_format
+<   operator|(chars_format __lhs, chars_format __rhs) noexcept
+<   { return (chars_format)((unsigned)__lhs | (unsigned)__rhs); }
+< 
+<   constexpr chars_format
+<   operator&(chars_format __lhs, chars_format __rhs) noexcept
+<   { return (chars_format)((unsigned)__lhs & (unsigned)__rhs); }
+< 
+<   constexpr chars_format
+<   operator^(chars_format __lhs, chars_format __rhs) noexcept
+<   { return (chars_format)((unsigned)__lhs ^ (unsigned)__rhs); }
+< 
+<   constexpr chars_format
+<   operator~(chars_format __fmt) noexcept
+<   { return (chars_format)~(unsigned)__fmt; }
+---
+>   constexpr CXX20_FORMAT_DECORATE_NAME(__chars_format)
+>   operator|(CXX20_FORMAT_DECORATE_NAME(__chars_format) __lhs, CXX20_FORMAT_DECORATE_NAME(__chars_format) __rhs) noexcept
+>   { return (CXX20_FORMAT_DECORATE_NAME(__chars_format))((unsigned)__lhs | (unsigned)__rhs); }
+> 
+>   constexpr CXX20_FORMAT_DECORATE_NAME(__chars_format)
+>   operator&(CXX20_FORMAT_DECORATE_NAME(__chars_format) __lhs, CXX20_FORMAT_DECORATE_NAME(__chars_format) __rhs) noexcept
+>   { return (CXX20_FORMAT_DECORATE_NAME(__chars_format))((unsigned)__lhs & (unsigned)__rhs); }
+> 
+>   constexpr CXX20_FORMAT_DECORATE_NAME(__chars_format)
+>   operator^(CXX20_FORMAT_DECORATE_NAME(__chars_format) __lhs, CXX20_FORMAT_DECORATE_NAME(__chars_format) __rhs) noexcept
+>   { return (CXX20_FORMAT_DECORATE_NAME(__chars_format))((unsigned)__lhs ^ (unsigned)__rhs); }
+> 
+>   constexpr CXX20_FORMAT_DECORATE_NAME(__chars_format)
+>   operator~(CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt) noexcept
+>   { return (CXX20_FORMAT_DECORATE_NAME(__chars_format))~(unsigned)__fmt; }
+656,657c649,650
+<   constexpr chars_format&
+<   operator|=(chars_format& __lhs, chars_format __rhs) noexcept
+---
+>   constexpr CXX20_FORMAT_DECORATE_NAME(__chars_format)&
+>   operator|=(CXX20_FORMAT_DECORATE_NAME(__chars_format)& __lhs, CXX20_FORMAT_DECORATE_NAME(__chars_format) __rhs) noexcept
+660,661c653,654
+<   constexpr chars_format&
+<   operator&=(chars_format& __lhs, chars_format __rhs) noexcept
+---
+>   constexpr CXX20_FORMAT_DECORATE_NAME(__chars_format)&
+>   operator&=(CXX20_FORMAT_DECORATE_NAME(__chars_format)& __lhs, CXX20_FORMAT_DECORATE_NAME(__chars_format) __rhs) noexcept
+664,665c657,658
+<   constexpr chars_format&
+<   operator^=(chars_format& __lhs, chars_format __rhs) noexcept
+---
+>   constexpr CXX20_FORMAT_DECORATE_NAME(__chars_format)&
+>   operator^=(CXX20_FORMAT_DECORATE_NAME(__chars_format)& __lhs, CXX20_FORMAT_DECORATE_NAME(__chars_format) __rhs) noexcept
+669,679c662,672
+<   from_chars_result
 <   from_chars(const char* __first, const char* __last, float& __value,
----
->   CXX20_FORMAT_DECORATE_NAME(__from_chars)(const char* __first, const char* __last, float& __value,
-674c667
+< 	     chars_format __fmt = chars_format::general) noexcept;
+< 
+<   from_chars_result
 <   from_chars(const char* __first, const char* __last, double& __value,
----
->   CXX20_FORMAT_DECORATE_NAME(__from_chars)(const char* __first, const char* __last, double& __value,
-678c671
+< 	     chars_format __fmt = chars_format::general) noexcept;
+< 
+<   from_chars_result
 <   from_chars(const char* __first, const char* __last, long double& __value,
+< 	     chars_format __fmt = chars_format::general) noexcept;
 ---
+>   CXX20_FORMAT_DECORATE_NAME(__from_chars_result)
+>   CXX20_FORMAT_DECORATE_NAME(__from_chars)(const char* __first, const char* __last, float& __value,
+> 	     CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::general) noexcept;
+> 
+>   CXX20_FORMAT_DECORATE_NAME(__from_chars_result)
+>   CXX20_FORMAT_DECORATE_NAME(__from_chars)(const char* __first, const char* __last, double& __value,
+> 	     CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::general) noexcept;
+> 
+>   CXX20_FORMAT_DECORATE_NAME(__from_chars_result)
 >   CXX20_FORMAT_DECORATE_NAME(__from_chars)(const char* __first, const char* __last, long double& __value,
-695c688
+> 	     CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::general) noexcept;
+683c676
+<   from_chars_result
+---
+>   CXX20_FORMAT_DECORATE_NAME(__from_chars_result)
+686,687c679,680
+< 			 chars_format __fmt = chars_format::general) noexcept;
+<   from_chars_result
+---
+> 			 CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::general) noexcept;
+>   CXX20_FORMAT_DECORATE_NAME(__from_chars_result)
+690c683
+< 			  chars_format __fmt = chars_format::general) noexcept;
+---
+> 			  CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::general) noexcept;
+694,696c687,689
+<   inline from_chars_result
 <   from_chars(const char* __first, const char* __last, _Float16& __value,
+< 	     chars_format __fmt = chars_format::general) noexcept
 ---
+>   inline CXX20_FORMAT_DECORATE_NAME(__from_chars_result)
 >   CXX20_FORMAT_DECORATE_NAME(__from_chars)(const char* __first, const char* __last, _Float16& __value,
-709c702
-<   from_chars(const char* __first, const char* __last, _Float32& __value,
+> 	     CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::general) noexcept
+699c692
+<     from_chars_result __res
 ---
+>     CXX20_FORMAT_DECORATE_NAME(__from_chars_result) __res
+708,710c701,703
+<   inline from_chars_result
+<   from_chars(const char* __first, const char* __last, _Float32& __value,
+< 	     chars_format __fmt = chars_format::general) noexcept
+---
+>   inline CXX20_FORMAT_DECORATE_NAME(__from_chars_result)
 >   CXX20_FORMAT_DECORATE_NAME(__from_chars)(const char* __first, const char* __last, _Float32& __value,
+> 	     CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::general) noexcept
 713c706
 <     from_chars_result __res = from_chars(__first, __last, __val, __fmt);
 ---
->     from_chars_result __res = CXX20_FORMAT_DECORATE_NAME(__from_chars)(__first, __last, __val, __fmt);
-722c715
+>     CXX20_FORMAT_DECORATE_NAME(__from_chars_result) __res = CXX20_FORMAT_DECORATE_NAME(__from_chars)(__first, __last, __val, __fmt);
+721,723c714,716
+<   inline from_chars_result
 <   from_chars(const char* __first, const char* __last, _Float64& __value,
+< 	     chars_format __fmt = chars_format::general) noexcept
 ---
+>   inline CXX20_FORMAT_DECORATE_NAME(__from_chars_result)
 >   CXX20_FORMAT_DECORATE_NAME(__from_chars)(const char* __first, const char* __last, _Float64& __value,
+> 	     CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::general) noexcept
 726c719
 <     from_chars_result __res = from_chars(__first, __last, __val, __fmt);
 ---
->     from_chars_result __res = CXX20_FORMAT_DECORATE_NAME(__from_chars)(__first, __last, __val, __fmt);
-735c728
+>     CXX20_FORMAT_DECORATE_NAME(__from_chars_result) __res = CXX20_FORMAT_DECORATE_NAME(__from_chars)(__first, __last, __val, __fmt);
+734,736c727,729
+<   inline from_chars_result
 <   from_chars(const char* __first, const char* __last, _Float128& __value,
+< 	     chars_format __fmt = chars_format::general) noexcept
 ---
+>   inline CXX20_FORMAT_DECORATE_NAME(__from_chars_result)
 >   CXX20_FORMAT_DECORATE_NAME(__from_chars)(const char* __first, const char* __last, _Float128& __value,
+> 	     CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::general) noexcept
 739c732
 <     from_chars_result __res = from_chars(__first, __last, __val, __fmt);
 ---
->     from_chars_result __res = CXX20_FORMAT_DECORATE_NAME(__from_chars)(__first, __last, __val, __fmt);
-747c740
+>     CXX20_FORMAT_DECORATE_NAME(__from_chars_result) __res = CXX20_FORMAT_DECORATE_NAME(__from_chars)(__first, __last, __val, __fmt);
+746,752c739,745
+<   __extension__ from_chars_result
 <   from_chars(const char* __first, const char* __last, __ieee128& __value,
----
->   CXX20_FORMAT_DECORATE_NAME(__from_chars)(const char* __first, const char* __last, __ieee128& __value,
-751c744
+< 	     chars_format __fmt = chars_format::general) noexcept;
+< 
+<   inline from_chars_result
 <   from_chars(const char* __first, const char* __last, _Float128& __value,
+< 	     chars_format __fmt = chars_format::general) noexcept
 ---
+>   __extension__ CXX20_FORMAT_DECORATE_NAME(__from_chars_result)
+>   CXX20_FORMAT_DECORATE_NAME(__from_chars)(const char* __first, const char* __last, __ieee128& __value,
+> 	     CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::general) noexcept;
+> 
+>   inline CXX20_FORMAT_DECORATE_NAME(__from_chars_result)
 >   CXX20_FORMAT_DECORATE_NAME(__from_chars)(const char* __first, const char* __last, _Float128& __value,
+> 	     CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::general) noexcept
 755c748
 <     from_chars_result __res = from_chars(__first, __last, __val, __fmt);
 ---
->     from_chars_result __res = CXX20_FORMAT_DECORATE_NAME(__from_chars)(__first, __last, __val, __fmt);
-762c755
+>     CXX20_FORMAT_DECORATE_NAME(__from_chars_result) __res = CXX20_FORMAT_DECORATE_NAME(__from_chars)(__first, __last, __val, __fmt);
+761,763c754,756
+<   from_chars_result
 <   from_chars(const char* __first, const char* __last, _Float128& __value,
+< 	     chars_format __fmt = chars_format::general) noexcept;
 ---
+>   CXX20_FORMAT_DECORATE_NAME(__from_chars_result)
 >   CXX20_FORMAT_DECORATE_NAME(__from_chars)(const char* __first, const char* __last, _Float128& __value,
-770c763
+> 	     CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::general) noexcept;
+769,770c762,763
+<   inline from_chars_result
 <   from_chars(const char* __first, const char* __last,
 ---
+>   inline CXX20_FORMAT_DECORATE_NAME(__from_chars_result)
 >   CXX20_FORMAT_DECORATE_NAME(__from_chars)(const char* __first, const char* __last,
-788,789c781,782
+772c765
+< 	     chars_format __fmt = chars_format::general) noexcept
+---
+> 	     CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::general) noexcept
+775c768
+<     from_chars_result __res
+---
+>     CXX20_FORMAT_DECORATE_NAME(__from_chars_result) __res
+788,792c781,785
 <   to_chars_result to_chars(char* __first, char* __last, float __value) noexcept;
 <   to_chars_result to_chars(char* __first, char* __last, float __value,
----
->   to_chars_result CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, float __value) noexcept;
->   to_chars_result CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, float __value,
-791c784
+< 			   chars_format __fmt) noexcept;
 <   to_chars_result to_chars(char* __first, char* __last, float __value,
+< 			   chars_format __fmt, int __precision) noexcept;
 ---
->   to_chars_result CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, float __value,
-795,796c788,789
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars_result) CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, float __value) noexcept;
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars_result) CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, float __value,
+> 			   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt) noexcept;
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars_result) CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, float __value,
+> 			   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt, int __precision) noexcept;
+795,799c788,792
 <   to_chars_result to_chars(char* __first, char* __last, double __value) noexcept;
 <   to_chars_result to_chars(char* __first, char* __last, double __value,
----
->   to_chars_result CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, double __value) noexcept;
->   to_chars_result CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, double __value,
-798c791
+< 			   chars_format __fmt) noexcept;
 <   to_chars_result to_chars(char* __first, char* __last, double __value,
+< 			   chars_format __fmt, int __precision) noexcept;
 ---
->   to_chars_result CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, double __value,
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars_result) CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, double __value) noexcept;
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars_result) CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, double __value,
+> 			   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt) noexcept;
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars_result) CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, double __value,
+> 			   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt, int __precision) noexcept;
 802c795
 <   to_chars_result to_chars(char* __first, char* __last, long double __value)
 ---
->   to_chars_result CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, long double __value)
-804c797
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars_result) CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, long double __value)
+804,807c797,800
 <   to_chars_result to_chars(char* __first, char* __last, long double __value,
----
->   to_chars_result CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, long double __value,
-806c799
+< 			   chars_format __fmt) noexcept;
 <   to_chars_result to_chars(char* __first, char* __last, long double __value,
+< 			   chars_format __fmt, int __precision) noexcept;
 ---
->   to_chars_result CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, long double __value,
-820c813
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars_result) CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, long double __value,
+> 			   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt) noexcept;
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars_result) CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, long double __value,
+> 			   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt, int __precision) noexcept;
+811c804
+<   to_chars_result __to_chars_float16_t(char* __first, char* __last,
+---
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars_result) __to_chars_float16_t(char* __first, char* __last,
+813,814c806,807
+< 				       chars_format __fmt) noexcept;
+<   to_chars_result __to_chars_bfloat16_t(char* __first, char* __last,
+---
+> 				       CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt) noexcept;
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars_result) __to_chars_bfloat16_t(char* __first, char* __last,
+816c809
+< 					chars_format __fmt) noexcept;
+---
+> 					CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt) noexcept;
+819,820c812,813
+<   inline to_chars_result
 <   to_chars(char* __first, char* __last, _Float16 __value) noexcept
 ---
+>   inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
 >   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float16 __value) noexcept
-826c819
-<   to_chars(char* __first, char* __last, _Float16 __value,
+823c816
+< 				chars_format{});
 ---
->   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float16 __value,
-830c823
+> 				CXX20_FORMAT_DECORATE_NAME(__chars_format){});
+825,827c818,820
+<   inline to_chars_result
 <   to_chars(char* __first, char* __last, _Float16 __value,
+< 	   chars_format __fmt) noexcept
 ---
+>   inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
 >   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float16 __value,
-832c825
+> 	   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt) noexcept
+829,832c822,825
+<   inline to_chars_result
+<   to_chars(char* __first, char* __last, _Float16 __value,
+< 	   chars_format __fmt, int __precision) noexcept
 <   { return to_chars(__first, __last, float(__value), __fmt, __precision); }
 ---
+>   inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float16 __value,
+> 	   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt, int __precision) noexcept
 >   { return CXX20_FORMAT_DECORATE_NAME(__to_chars)(__first, __last, float(__value), __fmt, __precision); }
-837,838c830,831
+836,846c829,839
+<   inline to_chars_result
 <   to_chars(char* __first, char* __last, _Float32 __value) noexcept
 <   { return to_chars(__first, __last, float(__value)); }
----
->   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float32 __value) noexcept
->   { return CXX20_FORMAT_DECORATE_NAME(__to_chars)(__first, __last, float(__value)); }
-840c833
+<   inline to_chars_result
 <   to_chars(char* __first, char* __last, _Float32 __value,
----
->   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float32 __value,
-842c835
+< 	   chars_format __fmt) noexcept
 <   { return to_chars(__first, __last, float(__value), __fmt); }
----
->   { return CXX20_FORMAT_DECORATE_NAME(__to_chars)(__first, __last, float(__value), __fmt); }
-844c837
+<   inline to_chars_result
 <   to_chars(char* __first, char* __last, _Float32 __value,
----
->   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float32 __value,
-846c839
+< 	   chars_format __fmt, int __precision) noexcept
 <   { return to_chars(__first, __last, float(__value), __fmt, __precision); }
 ---
+>   inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float32 __value) noexcept
+>   { return CXX20_FORMAT_DECORATE_NAME(__to_chars)(__first, __last, float(__value)); }
+>   inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float32 __value,
+> 	   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt) noexcept
+>   { return CXX20_FORMAT_DECORATE_NAME(__to_chars)(__first, __last, float(__value), __fmt); }
+>   inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float32 __value,
+> 	   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt, int __precision) noexcept
 >   { return CXX20_FORMAT_DECORATE_NAME(__to_chars)(__first, __last, float(__value), __fmt, __precision); }
-851,852c844,845
+850,860c843,853
+<   inline to_chars_result
 <   to_chars(char* __first, char* __last, _Float64 __value) noexcept
 <   { return to_chars(__first, __last, double(__value)); }
----
->   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float64 __value) noexcept
->   { return CXX20_FORMAT_DECORATE_NAME(__to_chars)(__first, __last, double(__value)); }
-854c847
+<   inline to_chars_result
 <   to_chars(char* __first, char* __last, _Float64 __value,
----
->   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float64 __value,
-856c849
+< 	   chars_format __fmt) noexcept
 <   { return to_chars(__first, __last, double(__value), __fmt); }
----
->   { return CXX20_FORMAT_DECORATE_NAME(__to_chars)(__first, __last, double(__value), __fmt); }
-858c851
+<   inline to_chars_result
 <   to_chars(char* __first, char* __last, _Float64 __value,
----
->   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float64 __value,
-860c853
+< 	   chars_format __fmt, int __precision) noexcept
 <   { return to_chars(__first, __last, double(__value), __fmt, __precision); }
 ---
+>   inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float64 __value) noexcept
+>   { return CXX20_FORMAT_DECORATE_NAME(__to_chars)(__first, __last, double(__value)); }
+>   inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float64 __value,
+> 	   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt) noexcept
+>   { return CXX20_FORMAT_DECORATE_NAME(__to_chars)(__first, __last, double(__value), __fmt); }
+>   inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float64 __value,
+> 	   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt, int __precision) noexcept
 >   { return CXX20_FORMAT_DECORATE_NAME(__to_chars)(__first, __last, double(__value), __fmt, __precision); }
-865,866c858,859
+864,875c857,868
+<   inline to_chars_result
 <   to_chars(char* __first, char* __last, _Float128 __value) noexcept
 <   { return to_chars(__first, __last, static_cast<long double>(__value)); }
+<   inline to_chars_result
+<   to_chars(char* __first, char* __last, _Float128 __value,
+< 	   chars_format __fmt) noexcept
+<   {
+<     return to_chars(__first, __last, static_cast<long double>(__value), __fmt);
+<   }
+<   inline to_chars_result
+<   to_chars(char* __first, char* __last, _Float128 __value,
+< 	   chars_format __fmt, int __precision) noexcept
 ---
+>   inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
 >   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float128 __value) noexcept
 >   { return CXX20_FORMAT_DECORATE_NAME(__to_chars)(__first, __last, static_cast<long double>(__value)); }
-868c861
-<   to_chars(char* __first, char* __last, _Float128 __value,
----
+>   inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
 >   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float128 __value,
-871c864
-<     return to_chars(__first, __last, static_cast<long double>(__value), __fmt);
----
+> 	   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt) noexcept
+>   {
 >     return CXX20_FORMAT_DECORATE_NAME(__to_chars)(__first, __last, static_cast<long double>(__value), __fmt);
-874c867
-<   to_chars(char* __first, char* __last, _Float128 __value,
----
+>   }
+>   inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
 >   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float128 __value,
+> 	   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt, int __precision) noexcept
 877c870
 <     return to_chars(__first, __last, static_cast<long double>(__value), __fmt,
 ---
 >     return CXX20_FORMAT_DECORATE_NAME(__to_chars)(__first, __last, static_cast<long double>(__value), __fmt,
-883c876
+882,889c875,882
+<   __extension__ to_chars_result
 <   to_chars(char* __first, char* __last, __float128 __value) noexcept;
+<   __extension__ to_chars_result
+<   to_chars(char* __first, char* __last, __float128 __value,
+< 	   chars_format __fmt) noexcept;
+<   __extension__ to_chars_result
+<   to_chars(char* __first, char* __last, __float128 __value,
+< 	   chars_format __fmt, int __precision) noexcept;
 ---
+>   __extension__ CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
 >   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, __float128 __value) noexcept;
-885c878
-<   to_chars(char* __first, char* __last, __float128 __value,
----
+>   __extension__ CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
 >   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, __float128 __value,
-888c881
-<   to_chars(char* __first, char* __last, __float128 __value,
----
+> 	   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt) noexcept;
+>   __extension__ CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
 >   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, __float128 __value,
-892c885
+> 	   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt, int __precision) noexcept;
+891,892c884,885
+<   inline to_chars_result
 <   to_chars(char* __first, char* __last, _Float128 __value) noexcept
 ---
+>   inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
 >   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float128 __value) noexcept
 894c887
 <     return __extension__ to_chars(__first, __last,
 ---
 >     return __extension__ CXX20_FORMAT_DECORATE_NAME(__to_chars)(__first, __last,
-898c891
+897,899c890,892
+<   inline to_chars_result
 <   to_chars(char* __first, char* __last, _Float128 __value,
+< 	   chars_format __fmt) noexcept
 ---
+>   inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
 >   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float128 __value,
+> 	   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt) noexcept
 902c895
 <     return __extension__ to_chars(__first, __last,
 ---
 >     return __extension__ CXX20_FORMAT_DECORATE_NAME(__to_chars)(__first, __last,
-906c899
+905,907c898,900
+<   inline to_chars_result
 <   to_chars(char* __first, char* __last, _Float128 __value,
+< 	   chars_format __fmt, int __precision) noexcept
 ---
+>   inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
 >   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float128 __value,
+> 	   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt, int __precision) noexcept
 910c903
 <     return __extension__ to_chars(__first, __last,
 ---
@@ -377,30 +611,44 @@
 915c908
 <   to_chars_result to_chars(char* __first, char* __last, _Float128 __value)
 ---
->   to_chars_result CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float128 __value)
-917c910
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars_result) CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float128 __value)
+917,920c910,913
 <   to_chars_result to_chars(char* __first, char* __last, _Float128 __value,
----
->   to_chars_result CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float128 __value,
-919c912
+< 			   chars_format __fmt) noexcept;
 <   to_chars_result to_chars(char* __first, char* __last, _Float128 __value,
+< 			   chars_format __fmt, int __precision) noexcept;
 ---
->   to_chars_result CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float128 __value,
-926c919
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars_result) CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float128 __value,
+> 			   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt) noexcept;
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars_result) CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Float128 __value,
+> 			   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt, int __precision) noexcept;
+925,926c918,919
+<   inline to_chars_result
 <   to_chars(char* __first, char* __last,
 ---
+>   inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
 >   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last,
-933c926
-<   to_chars(char* __first, char* __last, __gnu_cxx::__bfloat16_t __value,
+930c923
+< 				 chars_format{});
 ---
->   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, __gnu_cxx::__bfloat16_t __value,
-937c930
+> 				 CXX20_FORMAT_DECORATE_NAME(__chars_format){});
+932,934c925,927
+<   inline to_chars_result
 <   to_chars(char* __first, char* __last, __gnu_cxx::__bfloat16_t __value,
+< 	   chars_format __fmt) noexcept
 ---
+>   inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
 >   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, __gnu_cxx::__bfloat16_t __value,
-939c932
+> 	   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt) noexcept
+936,939c929,932
+<   inline to_chars_result
+<   to_chars(char* __first, char* __last, __gnu_cxx::__bfloat16_t __value,
+< 	   chars_format __fmt, int __precision) noexcept
 <   { return to_chars(__first, __last, float(__value), __fmt, __precision); }
 ---
+>   inline CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, __gnu_cxx::__bfloat16_t __value,
+> 	   CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt, int __precision) noexcept
 >   { return CXX20_FORMAT_DECORATE_NAME(__to_chars)(__first, __last, float(__value), __fmt, __precision); }
 943c936
 < _GLIBCXX_END_NAMESPACE_VERSION

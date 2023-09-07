@@ -1001,7 +1001,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
 	    return _M_format_character(_S_to_character(__i), __fc);
 
 	  char __buf[sizeof(_Int) * __CHAR_BIT__ + 3];
-	  to_chars_result __res{};
+	  CXX20_FORMAT_DECORATE_NAME(__to_chars_result) __res{};
 
 	  string_view __base_prefix;
 	  make_unsigned_t<_Int> __u;
@@ -1211,7 +1211,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
 
       // std::to_chars is not overloaded for int128 in strict mode.
       template<typename _Int>
-	static to_chars_result
+	static CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
 	CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Int __value, int __base)
 	{ return std::CXX20_FORMAT_NAMESPACE::__to_chars_i<_Int>(__first, __last, __value, __base); }
 #endif
@@ -1238,28 +1238,28 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
 #ifdef __LONG_DOUBLE_IEEE128__
   // These overloads exist in the library, but are not declared.
   // Make them available as std::__format::to_chars.
-  to_chars_result
+  CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, __ibm128) noexcept
     __asm("_ZSt8to_charsPcS_e");
 
-  to_chars_result
-  CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, __ibm128, chars_format) noexcept
+  CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
+  CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, __ibm128, CXX20_FORMAT_DECORATE_NAME(__chars_format)) noexcept
     __asm("_ZSt8to_charsPcS_eSt12chars_format");
 
-  to_chars_result
-  CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, __ibm128, chars_format, int) noexcept
+  CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
+  CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, __ibm128, CXX20_FORMAT_DECORATE_NAME(__chars_format), int) noexcept
     __asm("_ZSt8to_charsPcS_eSt12chars_formati");
 #elif __cplusplus == 202002L
-  to_chars_result
+  CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, __ieee128) noexcept
     __asm("_ZSt8to_charsPcS_u9__ieee128");
 
-  to_chars_result
-  CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, __ieee128, chars_format) noexcept
+  CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
+  CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, __ieee128, CXX20_FORMAT_DECORATE_NAME(__chars_format)) noexcept
     __asm("_ZSt8to_charsPcS_u9__ieee128St12chars_format");
 
-  to_chars_result
-  CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, __ieee128, chars_format, int) noexcept
+  CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
+  CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, __ieee128, CXX20_FORMAT_DECORATE_NAME(__chars_format), int) noexcept
     __asm("_ZSt8to_charsPcS_u9__ieee128St12chars_formati");
 #endif
 
@@ -1278,7 +1278,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
 # if __cplusplus == 202002L
   // These overloads exist in the library, but are not declared for C++20.
   // Make them available as std::__format::to_chars.
-  to_chars_result
+  CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, _Float128) noexcept
 #  if _GLIBCXX_INLINE_VERSION
     __asm("_ZNSt3__88to_charsEPcS0_DF128_");
@@ -1286,16 +1286,16 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
     __asm("_ZSt8to_charsPcS_DF128_");
 #  endif
 
-  to_chars_result
-  CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, _Float128, chars_format) noexcept
+  CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
+  CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, _Float128, CXX20_FORMAT_DECORATE_NAME(__chars_format)) noexcept
 #  if _GLIBCXX_INLINE_VERSION
     __asm("_ZNSt3__88to_charsEPcS0_DF128_NS_12chars_formatE");
 #  else
     __asm("_ZSt8to_charsPcS_DF128_St12chars_format");
 #  endif
 
-  to_chars_result
-  CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, _Float128, chars_format, int) noexcept
+  CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
+  CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, _Float128, CXX20_FORMAT_DECORATE_NAME(__chars_format), int) noexcept
 #  if _GLIBCXX_INLINE_VERSION
     __asm("_ZNSt3__88to_charsEPcS0_DF128_NS_12chars_formatEi");
 #  else
@@ -1309,7 +1309,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
   // We can format a floating-point type iff it is usable with to_chars.
   template<typename _Tp>
     concept __formattable_float = requires (_Tp __t, char* __p)
-    { CXX20_FORMAT_DECORATE_NAME(__format)::CXX20_FORMAT_DECORATE_NAME(__to_chars)(__p, __p, __t, chars_format::scientific, 6); };
+    { CXX20_FORMAT_DECORATE_NAME(__format)::CXX20_FORMAT_DECORATE_NAME(__to_chars)(__p, __p, __t, CXX20_FORMAT_DECORATE_NAME(__chars_format)::scientific, 6); };
 
   template<__char _CharT>
     struct __formatter_fp
@@ -1413,7 +1413,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
 	{
 	  std::string __dynbuf;
 	  char __buf[128];
-	  to_chars_result __res{};
+	  CXX20_FORMAT_DECORATE_NAME(__to_chars_result) __res{};
 
 	  size_t __prec = 6;
 	  bool __use_prec = _M_spec._M_prec_kind != _WP_none;
@@ -1423,7 +1423,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
 	  char* __start = __buf + 1; // reserve space for sign
 	  char* __end = __buf + sizeof(__buf);
 
-	  chars_format __fmt{};
+	  CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt{};
 	  bool __upper = false;
 	  bool __trailing_zeros = false;
 	  char __expc = 0;
@@ -1435,7 +1435,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
 	      [[fallthrough]];
 	    case _Pres_a:
 	      __expc = 'p';
-	      __fmt = chars_format::hex;
+	      __fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::hex;
 	      break;
 	    case _Pres_E:
 	      __upper = true;
@@ -1443,11 +1443,11 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
 	    case _Pres_e:
 	      __expc = 'e';
 	      __use_prec = true;
-	      __fmt = chars_format::scientific;
+	      __fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::scientific;
 	      break;
 	    case _Pres_f:
 	      __use_prec = true;
-	      __fmt = chars_format::fixed;
+	      __fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::fixed;
 	      break;
 	    case _Pres_G:
 	      __upper = true;
@@ -1456,11 +1456,11 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
 	      __trailing_zeros = true;
 	      __expc = 'e';
 	      __use_prec = true;
-	      __fmt = chars_format::general;
+	      __fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::general;
 	      break;
 	    case _Pres_none:
 	      if (__use_prec)
-		__fmt = chars_format::general;
+		__fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::general;
 	      break;
 	  }
 
@@ -1468,7 +1468,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
 	  auto __to_chars = [&](char* __b, char* __e) {
 	    if (__use_prec)
 	      return CXX20_FORMAT_DECORATE_NAME(__format)::CXX20_FORMAT_DECORATE_NAME(__to_chars)(__b, __e, __v, __fmt, __prec);
-	    else if (__fmt != chars_format{})
+	    else if (__fmt != CXX20_FORMAT_DECORATE_NAME(__chars_format){})
 	      return CXX20_FORMAT_DECORATE_NAME(__format)::CXX20_FORMAT_DECORATE_NAME(__to_chars)(__b, __e, __v, __fmt);
 	    else
 	      return CXX20_FORMAT_DECORATE_NAME(__format)::CXX20_FORMAT_DECORATE_NAME(__to_chars)(__b, __e, __v);
@@ -1482,7 +1482,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
 	      // If the buffer is too small it's probably because of a large
 	      // precision, or a very large value in fixed format.
 	      size_t __guess =  __prec + sizeof(__buf);
-	      if (__fmt == chars_format::fixed)
+	      if (__fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format)::fixed)
 		__guess += max((int)__builtin_log10(__builtin_abs(__v)) / 2, 1);
 	      __dynbuf.reserve(__guess);
 

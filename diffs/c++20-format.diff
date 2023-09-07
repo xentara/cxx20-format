@@ -145,6 +145,10 @@
 < 	__format::__failed_to_parse_format_spec();
 ---
 > 	CXX20_FORMAT_DECORATE_NAME(__format)::__failed_to_parse_format_spec();
+1007c1004
+< 	  to_chars_result __res{};
+---
+> 	  CXX20_FORMAT_DECORATE_NAME(__to_chars_result) __res{};
 1025c1022
 < 	      __res = to_chars(__start, __end, __u, 2);
 ---
@@ -185,10 +189,12 @@
 < 	  return __format::__write_padded(std::move(__out), __str,
 ---
 > 	  return CXX20_FORMAT_DECORATE_NAME(__format)::__write_padded(std::move(__out), __str,
-1218,1219c1215,1216
+1217,1219c1214,1216
+< 	static to_chars_result
 < 	to_chars(char* __first, char* __last, _Int __value, int __base)
 < 	{ return std::__to_chars_i<_Int>(__first, __last, __value, __base); }
 ---
+> 	static CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
 > 	CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Int __value, int __base)
 > 	{ return std::CXX20_FORMAT_NAMESPACE::__to_chars_i<_Int>(__first, __last, __value, __base); }
 1228,1229c1225,1226
@@ -209,30 +215,42 @@
 < # define _GLIBCXX_FORMAT_F128 1
 ---
 > # define CXX20_FORMAT_FORMAT_F128 1
-1245c1242
+1244,1245c1241,1242
+<   to_chars_result
 <   to_chars(char*, char*, __ibm128) noexcept
 ---
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
 >   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, __ibm128) noexcept
-1249c1246
+1248,1249c1245,1246
+<   to_chars_result
 <   to_chars(char*, char*, __ibm128, chars_format) noexcept
 ---
->   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, __ibm128, chars_format) noexcept
-1253c1250
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, __ibm128, CXX20_FORMAT_DECORATE_NAME(__chars_format)) noexcept
+1252,1253c1249,1250
+<   to_chars_result
 <   to_chars(char*, char*, __ibm128, chars_format, int) noexcept
 ---
->   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, __ibm128, chars_format, int) noexcept
-1257c1254
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, __ibm128, CXX20_FORMAT_DECORATE_NAME(__chars_format), int) noexcept
+1256,1257c1253,1254
+<   to_chars_result
 <   to_chars(char*, char*, __ieee128) noexcept
 ---
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
 >   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, __ieee128) noexcept
-1261c1258
+1260,1261c1257,1258
+<   to_chars_result
 <   to_chars(char*, char*, __ieee128, chars_format) noexcept
 ---
->   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, __ieee128, chars_format) noexcept
-1265c1262
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, __ieee128, CXX20_FORMAT_DECORATE_NAME(__chars_format)) noexcept
+1264,1265c1261,1262
+<   to_chars_result
 <   to_chars(char*, char*, __ieee128, chars_format, int) noexcept
 ---
->   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, __ieee128, chars_format, int) noexcept
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, __ieee128, CXX20_FORMAT_DECORATE_NAME(__chars_format), int) noexcept
 1273c1270
 < # define _GLIBCXX_FORMAT_F128 1
 ---
@@ -241,18 +259,24 @@
 < # define _GLIBCXX_FORMAT_F128 2
 ---
 > # define CXX20_FORMAT_FORMAT_F128 2
-1285c1282
+1284,1285c1281,1282
+<   to_chars_result
 <   to_chars(char*, char*, _Float128) noexcept
 ---
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
 >   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, _Float128) noexcept
-1293c1290
+1292,1293c1289,1290
+<   to_chars_result
 <   to_chars(char*, char*, _Float128, chars_format) noexcept
 ---
->   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, _Float128, chars_format) noexcept
-1301c1298
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, _Float128, CXX20_FORMAT_DECORATE_NAME(__chars_format)) noexcept
+1300,1301c1297,1298
+<   to_chars_result
 <   to_chars(char*, char*, _Float128, chars_format, int) noexcept
 ---
->   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, _Float128, chars_format, int) noexcept
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, _Float128, CXX20_FORMAT_DECORATE_NAME(__chars_format), int) noexcept
 1310c1307
 <   using std::to_chars;
 ---
@@ -260,23 +284,55 @@
 1315c1312
 <     { __format::to_chars(__p, __p, __t, chars_format::scientific, 6); };
 ---
->     { CXX20_FORMAT_DECORATE_NAME(__format)::CXX20_FORMAT_DECORATE_NAME(__to_chars)(__p, __p, __t, chars_format::scientific, 6); };
+>     { CXX20_FORMAT_DECORATE_NAME(__format)::CXX20_FORMAT_DECORATE_NAME(__to_chars)(__p, __p, __t, CXX20_FORMAT_DECORATE_NAME(__chars_format)::scientific, 6); };
 1410c1407
 < 	__format::__failed_to_parse_format_spec();
 ---
 > 	CXX20_FORMAT_DECORATE_NAME(__format)::__failed_to_parse_format_spec();
-1473c1470
-< 	      return __format::to_chars(__b, __e, __v, __fmt, __prec);
+1419c1416
+< 	  to_chars_result __res{};
 ---
-> 	      return CXX20_FORMAT_DECORATE_NAME(__format)::CXX20_FORMAT_DECORATE_NAME(__to_chars)(__b, __e, __v, __fmt, __prec);
-1475c1472
+> 	  CXX20_FORMAT_DECORATE_NAME(__to_chars_result) __res{};
+1429c1426
+< 	  chars_format __fmt{};
+---
+> 	  CXX20_FORMAT_DECORATE_NAME(__chars_format) __fmt{};
+1441c1438
+< 	      __fmt = chars_format::hex;
+---
+> 	      __fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::hex;
+1449c1446
+< 	      __fmt = chars_format::scientific;
+---
+> 	      __fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::scientific;
+1453c1450
+< 	      __fmt = chars_format::fixed;
+---
+> 	      __fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::fixed;
+1462c1459
+< 	      __fmt = chars_format::general;
+---
+> 	      __fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::general;
+1466c1463
+< 		__fmt = chars_format::general;
+---
+> 		__fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::general;
+1473,1475c1470,1472
+< 	      return __format::to_chars(__b, __e, __v, __fmt, __prec);
+< 	    else if (__fmt != chars_format{})
 < 	      return __format::to_chars(__b, __e, __v, __fmt);
 ---
+> 	      return CXX20_FORMAT_DECORATE_NAME(__format)::CXX20_FORMAT_DECORATE_NAME(__to_chars)(__b, __e, __v, __fmt, __prec);
+> 	    else if (__fmt != CXX20_FORMAT_DECORATE_NAME(__chars_format){})
 > 	      return CXX20_FORMAT_DECORATE_NAME(__format)::CXX20_FORMAT_DECORATE_NAME(__to_chars)(__b, __e, __v, __fmt);
 1477c1474
 < 	      return __format::to_chars(__b, __e, __v);
 ---
 > 	      return CXX20_FORMAT_DECORATE_NAME(__format)::CXX20_FORMAT_DECORATE_NAME(__to_chars)(__b, __e, __v);
+1488c1485
+< 	      if (__fmt == chars_format::fixed)
+---
+> 	      if (__fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format)::fixed)
 1553c1550
 < 		  if (!__format::__is_xdigit(__s[0]))
 ---

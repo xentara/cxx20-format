@@ -674,7 +674,7 @@ namespace
 #if !defined __SIZEOF_INT128__
   // An implementation of base-10 std::to_chars for the uint128_t class type,
   // used by targets that lack __int128.
-  std::to_chars_result
+  std::CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* const last, uint128_t x)
   {
     const int len = ryu::generic128::decimalLength(x);
@@ -704,9 +704,9 @@ inline namespace CXX20_FORMAT_NAMESPACE
 // This subroutine of __floating_to_chars_* handles writing nan, inf and 0 in
 // all formatting modes.
 template<typename T>
-  static optional<to_chars_result>
+  static optional<CXX20_FORMAT_DECORATE_NAME(__to_chars_result)>
   __handle_special_value(char* first, char* const last, const T value,
-			 const chars_format fmt, const int precision)
+			 const CXX20_FORMAT_DECORATE_NAME(__chars_format) fmt, const int precision)
   {
     __glibcxx_assert(precision >= 0);
 
@@ -752,15 +752,15 @@ template<typename T>
     int expected_output_length;
     switch (fmt)
       {
-      case chars_format::fixed:
-      case chars_format::scientific:
-      case chars_format::hex:
+      case CXX20_FORMAT_DECORATE_NAME(__chars_format)::fixed:
+      case CXX20_FORMAT_DECORATE_NAME(__chars_format)::scientific:
+      case CXX20_FORMAT_DECORATE_NAME(__chars_format)::hex:
 	expected_output_length = sign + 1;
 	if (precision)
 	  expected_output_length += strlen(".") + precision;
-	if (fmt == chars_format::scientific)
+	if (fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format)::scientific)
 	  expected_output_length += strlen("e+00");
-	else if (fmt == chars_format::hex)
+	else if (fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format)::hex)
 	  expected_output_length += strlen("p+0");
 	if (last - first < expected_output_length)
 	  return {{last, errc::value_too_large}};
@@ -774,19 +774,19 @@ template<typename T>
 	    memset(first, '0', precision);
 	    first += precision;
 	  }
-	if (fmt == chars_format::scientific)
+	if (fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format)::scientific)
 	  {
 	    memcpy(first, "e+00", 4);
 	    first += 4;
 	  }
-	else if (fmt == chars_format::hex)
+	else if (fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format)::hex)
 	  {
 	    memcpy(first, "p+0", 3);
 	    first += 3;
 	  }
 	break;
 
-      case chars_format::general:
+      case CXX20_FORMAT_DECORATE_NAME(__chars_format)::general:
       default: // case chars_format{}:
 	expected_output_length = sign + 1;
 	if (last - first < expected_output_length)
@@ -802,22 +802,22 @@ template<typename T>
   }
 
 template<>
-  optional<to_chars_result>
+  optional<CXX20_FORMAT_DECORATE_NAME(__to_chars_result)>
   __handle_special_value<floating_type_float16_t>(char* first,
 						  char* const last,
 						  const floating_type_float16_t value,
-						  const chars_format fmt,
+						  const CXX20_FORMAT_DECORATE_NAME(__chars_format) fmt,
 						  const int precision)
   {
     return __handle_special_value(first, last, value.x, fmt, precision);
   }
 
 template<>
-  optional<to_chars_result>
+  optional<CXX20_FORMAT_DECORATE_NAME(__to_chars_result)>
   __handle_special_value<floating_type_bfloat16_t>(char* first,
 						   char* const last,
 						   const floating_type_bfloat16_t value,
-						   const chars_format fmt,
+						   const CXX20_FORMAT_DECORATE_NAME(__chars_format) fmt,
 						   const int precision)
   {
     return __handle_special_value(first, last, value.x, fmt, precision);
@@ -826,7 +826,7 @@ template<>
 // This subroutine of the floating-point to_chars overloads performs
 // hexadecimal formatting.
 template<typename T>
-  static to_chars_result
+  static CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
   __floating_to_chars_hex(char* first, char* const last, const T value,
 			  const optional<int> precision)
   {
@@ -845,7 +845,7 @@ template<typename T>
     constexpr int mantissa_t_width = sizeof(mantissa_t) * __CHAR_BIT__;
 
     if (auto result = __handle_special_value(first, last, value,
-					     chars_format::hex,
+					     CXX20_FORMAT_DECORATE_NAME(__chars_format)::hex,
 					     precision.value_or(0)))
       return *result;
 
@@ -1033,7 +1033,7 @@ template<typename T>
     *first++ = 'p';
     if (written_exponent >= 0)
       *first++ = '+';
-    const to_chars_result result = CXX20_FORMAT_DECORATE_NAME(__to_chars)(first, last, written_exponent);
+    const CXX20_FORMAT_DECORATE_NAME(__to_chars_result) result = CXX20_FORMAT_DECORATE_NAME(__to_chars)(first, last, written_exponent);
     __glibcxx_assert(result.ec == errc{} && result.ptr == expected_output_end);
     return result;
   }
@@ -1094,11 +1094,11 @@ namespace
 }
 
 template<typename T>
-  static to_chars_result
+  static CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
   __floating_to_chars_shortest(char* first, char* const last, const T value,
-			       chars_format fmt)
+			       CXX20_FORMAT_DECORATE_NAME(__chars_format) fmt)
   {
-    if (fmt == chars_format::hex)
+    if (fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format)::hex)
       {
 	// std::bfloat16_t has the same exponent range as std::float32_t
 	// and so we can avoid instantiation of __floating_to_chars_hex
@@ -1112,10 +1112,10 @@ template<typename T>
 	  return __floating_to_chars_hex(first, last, value, nullopt);
       }
 
-    __glibcxx_assert(fmt == chars_format::fixed
-		     || fmt == chars_format::scientific
-		     || fmt == chars_format::general
-		     || fmt == chars_format{});
+    __glibcxx_assert(fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format)::fixed
+		     || fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format)::scientific
+		     || fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format)::general
+		     || fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format){});
     __glibcxx_requires_valid_range(first, last);
 
     if (auto result = __handle_special_value(first, last, value, fmt, 0))
@@ -1125,17 +1125,17 @@ template<typename T>
     const int mantissa_length = get_mantissa_length(fd);
     const int scientific_exponent = fd.exponent + mantissa_length - 1;
 
-    if (fmt == chars_format::general)
+    if (fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format)::general)
       {
 	// Resolve the 'general' formatting mode as per the specification of
 	// the 'g' printf output specifier.  Since there is no precision
 	// argument, the default precision of the 'g' specifier, 6, applies.
 	if (scientific_exponent >= -4 && scientific_exponent < 6)
-	  fmt = chars_format::fixed;
+	  fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::fixed;
 	else
-	  fmt = chars_format::scientific;
+	  fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::scientific;
       }
-    else if (fmt == chars_format{})
+    else if (fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format){})
       {
 	// The 'plain' formatting mode resolves to 'scientific' if it yields
 	// the shorter string, and resolves to 'fixed' otherwise.  The
@@ -1149,12 +1149,12 @@ template<typename T>
 	  ++lower_bound, --upper_bound;
 
 	if (fd.exponent >= lower_bound && fd.exponent <= upper_bound)
-	  fmt = chars_format::fixed;
+	  fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::fixed;
 	else
-	  fmt = chars_format::scientific;
+	  fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::scientific;
       }
 
-    if (fmt == chars_format::scientific)
+    if (fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format)::scientific)
       {
 	// Calculate the total length of the output string, perform a bounds
 	// check, and then defer to Ryu's to_chars subroutine.
@@ -1172,7 +1172,7 @@ template<typename T>
 	__glibcxx_assert(output_length == expected_output_length);
 	return {first + output_length, errc{}};
       }
-    else if (fmt == chars_format::fixed && fd.exponent >= 0)
+    else if (fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format)::fixed && fd.exponent >= 0)
       {
 	// The Ryu exponent is positive, and so this number's shortest
 	// representation is a whole number, to be formatted in fixed instead
@@ -1219,7 +1219,7 @@ template<typename T>
 	    // writing out fd.mantissa followed by fd.exponent many 0s.
 	    if (fd.sign)
 	      *first++ = '-';
-	    to_chars_result result = CXX20_FORMAT_DECORATE_NAME(__to_chars)(first, last, fd.mantissa);
+	    CXX20_FORMAT_DECORATE_NAME(__to_chars_result) result = CXX20_FORMAT_DECORATE_NAME(__to_chars)(first, last, fd.mantissa);
 	    __glibcxx_assert(result.ec == errc{});
 	    memset(result.ptr, '0', fd.exponent);
 	    result.ptr += fd.exponent;
@@ -1253,7 +1253,7 @@ template<typename T>
 	    return {first + output_length, errc{}};
 	  }
       }
-    else if (fmt == chars_format::fixed && fd.exponent < 0)
+    else if (fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format)::fixed && fd.exponent < 0)
       {
 	// The Ryu exponent is negative, so fd.mantissa definitely contains
 	// all of the whole part of the number, and therefore fd.mantissa and
@@ -1277,7 +1277,7 @@ template<typename T>
 	    const int leading_zeros = -fd.exponent - mantissa_length;
 	    memset(first, '0', leading_zeros);
 	    first += leading_zeros;
-	    const to_chars_result result = CXX20_FORMAT_DECORATE_NAME(__to_chars)(first, last, fd.mantissa);
+	    const CXX20_FORMAT_DECORATE_NAME(__to_chars_result) result = CXX20_FORMAT_DECORATE_NAME(__to_chars)(first, last, fd.mantissa);
 	    const int output_length = result.ptr - orig_first;
 	    __glibcxx_assert(output_length == expected_output_length
 			     && result.ec == errc{});
@@ -1289,7 +1289,7 @@ template<typename T>
 	    const auto orig_first = first;
 	    if (fd.sign)
 	      *first++ = '-';
-	    to_chars_result result = CXX20_FORMAT_DECORATE_NAME(__to_chars)(first, last, fd.mantissa);
+	    CXX20_FORMAT_DECORATE_NAME(__to_chars_result) result = CXX20_FORMAT_DECORATE_NAME(__to_chars)(first, last, fd.mantissa);
 	    __glibcxx_assert(result.ec == errc{});
 	    // Make space for and write the decimal point in the correct spot.
 	    memmove(&result.ptr[fd.exponent+1], &result.ptr[fd.exponent],
@@ -1307,11 +1307,11 @@ template<typename T>
   }
 
 template<typename T>
-  static to_chars_result
+  static CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
   __floating_to_chars_precision(char* first, char* const last, const T value,
-				chars_format fmt, const int precision)
+				CXX20_FORMAT_DECORATE_NAME(__chars_format) fmt, const int precision)
   {
-    if (fmt == chars_format::hex)
+    if (fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format)::hex)
       return __floating_to_chars_hex(first, last, value, precision);
 
     if (precision < 0) [[unlikely]]
@@ -1320,9 +1320,9 @@ template<typename T>
       // specification.
       return __floating_to_chars_precision(first, last, value, fmt, 6);
 
-    __glibcxx_assert(fmt == chars_format::fixed
-		     || fmt == chars_format::scientific
-		     || fmt == chars_format::general);
+    __glibcxx_assert(fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format)::fixed
+		     || fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format)::scientific
+		     || fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format)::general);
     __glibcxx_requires_valid_range(first, last);
 
     if (auto result = __handle_special_value(first, last, value,
@@ -1377,24 +1377,24 @@ template<typename T>
       {
 	int effective_precision;
 	const char* output_specifier;
-	if (fmt == chars_format::scientific)
+	if (fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format)::scientific)
 	  {
 	    effective_precision = min(precision, max_eff_scientific_precision);
 	    output_specifier = "%.*Le";
 	  }
-	else if (fmt == chars_format::fixed)
+	else if (fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format)::fixed)
 	  {
 	    effective_precision = min(precision, max_eff_fixed_precision);
 	    output_specifier = "%.*Lf";
 	  }
-	else if (fmt == chars_format::general)
+	else if (fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format)::general)
 	  {
 	    effective_precision = min(precision, max_eff_scientific_precision);
 	    output_specifier = "%.*Lg";
 	  }
 	else
 	  __builtin_unreachable();
-	const int excess_precision = (fmt != chars_format::general
+	const int excess_precision = (fmt != CXX20_FORMAT_DECORATE_NAME(__chars_format)::general
 				      ? precision - effective_precision : 0);
 
 	// Since the output of printf is locale-sensitive, we need to be able
@@ -1414,11 +1414,11 @@ template<typename T>
 
 	// Compute straightforward upper bounds on the output length.
 	int output_length_upper_bound;
-	if (fmt == chars_format::scientific || fmt == chars_format::general)
+	if (fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format)::scientific || fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format)::general)
 	  output_length_upper_bound = (strlen("-d") + sizeof(radix)
 				       + effective_precision
 				       + strlen("e+dddd"));
-	else if (fmt == chars_format::fixed)
+	else if (fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format)::fixed)
 	  {
 	    if (approx_log10_value >= 0)
 	      output_length_upper_bound = sign + approx_log10_value + 1;
@@ -1465,7 +1465,7 @@ template<typename T>
 	// Add the excess 0s to the result.
 	if (excess_precision > 0)
 	  {
-	    if (fmt == chars_format::scientific)
+	    if (fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format)::scientific)
 	      {
 		char* const significand_end
 		  = (output_length >= 6 && first[-6] == 'e' ? &first[-6]
@@ -1477,7 +1477,7 @@ template<typename T>
 		  memset(significand_end, '0', excess_precision);
 		  first += excess_precision;
 	      }
-	    else if (fmt == chars_format::fixed)
+	    else if (fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format)::fixed)
 	      {
 		memset(first, '0', excess_precision);
 		first += excess_precision;
@@ -1485,7 +1485,7 @@ template<typename T>
 	  }
 	return {first, errc{}};
       }
-    else if (fmt == chars_format::scientific)
+    else if (fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format)::scientific)
       {
 	const int effective_precision
 	  = min(precision, max_eff_scientific_precision);
@@ -1557,7 +1557,7 @@ template<typename T>
 	  }
 	return {first, errc{}};
       }
-    else if (fmt == chars_format::fixed)
+    else if (fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format)::fixed)
       {
 	const int effective_precision
 	  = min(precision, max_eff_fixed_precision);
@@ -1606,7 +1606,7 @@ template<typename T>
 	  }
 	return {first, errc{}};
       }
-    else if (fmt == chars_format::general)
+    else if (fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format)::general)
       {
 	// Handle the 'general' formatting mode as per C11 printf's %g output
 	// specifier.  Since Ryu doesn't do zero-trimming, we always write to
@@ -1650,7 +1650,7 @@ template<typename T>
 	    // %g resolves to %f, the fixed form will be no larger than the
 	    // corresponding scientific form, and it will also contain the
 	    // same significant digits as the scientific form.
-	    fmt = chars_format::fixed;
+	    fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::fixed;
 	    if (scientific_exponent < 0)
 	      {
 		// e.g. buffer_start == "-1.234e-04"
@@ -1711,7 +1711,7 @@ template<typename T>
 	else
 	  {
 	    // We're sticking to the scientific form, so keep the output as-is.
-	    fmt = chars_format::scientific;
+	    fmt = CXX20_FORMAT_DECORATE_NAME(__chars_format)::scientific;
 	    effective_precision = effective_precision - 1;
 	  }
 
@@ -1721,23 +1721,23 @@ template<typename T>
 	if (effective_precision > 0)
 	  {
 	    char* decimal_point = nullptr;
-	    if (fmt == chars_format::scientific)
+	    if (fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format)::scientific)
 	      decimal_point = &buffer_start[sign + 1];
-	    else if (fmt == chars_format::fixed)
+	    else if (fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format)::fixed)
 	      decimal_point
 		= &buffer_start[output_length] - effective_precision - 1;
 	    __glibcxx_assert(*decimal_point == '.');
 
 	    char* const fractional_part_start = decimal_point + 1;
 	    char* fractional_part_end = nullptr;
-	    if (fmt == chars_format::scientific)
+	    if (fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format)::scientific)
 	      {
 		fractional_part_end = (buffer_start[output_length-5] == 'e'
 				       ? &buffer_start[output_length-5]
 				       : &buffer_start[output_length-4]);
 		__glibcxx_assert(*fractional_part_end == 'e');
 	      }
-	    else if (fmt == chars_format::fixed)
+	    else if (fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format)::fixed)
 	      fractional_part_end = &buffer_start[output_length];
 
 	    const string_view fractional_part
@@ -1751,7 +1751,7 @@ template<typename T>
 	      trim_start = decimal_point;
 	    else
 	      trim_start = &fractional_part_start[last_nonzero_digit_pos] + 1;
-	    if (fmt == chars_format::scientific)
+	    if (fmt == CXX20_FORMAT_DECORATE_NAME(__chars_format)::scientific)
 	      memmove(trim_start, fractional_part_end,
 		      &buffer_start[output_length] - fractional_part_end);
 	    output_length -= fractional_part_end - trim_start;
@@ -1769,47 +1769,47 @@ template<typename T>
   }
 
 // Define the overloads for float.
-to_chars_result
+CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
 CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, float value) noexcept
-{ return __floating_to_chars_shortest(first, last, value, chars_format{}); }
+{ return __floating_to_chars_shortest(first, last, value, CXX20_FORMAT_DECORATE_NAME(__chars_format){}); }
 
-to_chars_result
-CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, float value, chars_format fmt) noexcept
+CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
+CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, float value, CXX20_FORMAT_DECORATE_NAME(__chars_format) fmt) noexcept
 { return __floating_to_chars_shortest(first, last, value, fmt); }
 
-to_chars_result
-CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, float value, chars_format fmt,
+CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
+CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, float value, CXX20_FORMAT_DECORATE_NAME(__chars_format) fmt,
 	 int precision) noexcept
 { return __floating_to_chars_precision(first, last, value, fmt, precision); }
 
 // Define the overloads for double.
-to_chars_result
+CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
 CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, double value) noexcept
-{ return __floating_to_chars_shortest(first, last, value, chars_format{}); }
+{ return __floating_to_chars_shortest(first, last, value, CXX20_FORMAT_DECORATE_NAME(__chars_format){}); }
 
-to_chars_result
-CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, double value, chars_format fmt) noexcept
+CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
+CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, double value, CXX20_FORMAT_DECORATE_NAME(__chars_format) fmt) noexcept
 { return __floating_to_chars_shortest(first, last, value, fmt); }
 
-to_chars_result
-CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, double value, chars_format fmt,
+CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
+CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, double value, CXX20_FORMAT_DECORATE_NAME(__chars_format) fmt,
 	 int precision) noexcept
 { return __floating_to_chars_precision(first, last, value, fmt, precision); }
 
 // Define the overloads for long double.
-to_chars_result
+CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
 CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, long double value) noexcept
 {
   if constexpr (LONG_DOUBLE_KIND == LDK_BINARY64
 		|| LONG_DOUBLE_KIND == LDK_UNSUPPORTED)
     return __floating_to_chars_shortest(first, last, static_cast<double>(value),
-					chars_format{});
+					CXX20_FORMAT_DECORATE_NAME(__chars_format){});
   else
-    return __floating_to_chars_shortest(first, last, value, chars_format{});
+    return __floating_to_chars_shortest(first, last, value, CXX20_FORMAT_DECORATE_NAME(__chars_format){});
 }
 
-to_chars_result
-CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, long double value, chars_format fmt) noexcept
+CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
+CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, long double value, CXX20_FORMAT_DECORATE_NAME(__chars_format) fmt) noexcept
 {
   if constexpr (LONG_DOUBLE_KIND == LDK_BINARY64
 		|| LONG_DOUBLE_KIND == LDK_UNSUPPORTED)
@@ -1819,8 +1819,8 @@ CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, long double valu
     return __floating_to_chars_shortest(first, last, value, fmt);
 }
 
-to_chars_result
-CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, long double value, chars_format fmt,
+CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
+CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, long double value, CXX20_FORMAT_DECORATE_NAME(__chars_format) fmt,
 	 int precision) noexcept
 {
   if constexpr (LONG_DOUBLE_KIND == LDK_BINARY64
@@ -1834,56 +1834,56 @@ CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, long double valu
 
 #ifdef FLOAT128_TO_CHARS
 #ifdef _GLIBCXX_LONG_DOUBLE_ALT128_COMPAT
-to_chars_result
+CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
 CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, __float128 value) noexcept
 {
-  return __floating_to_chars_shortest(first, last, value, chars_format{});
+  return __floating_to_chars_shortest(first, last, value, CXX20_FORMAT_DECORATE_NAME(__chars_format){});
 }
 
-to_chars_result
-CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, __float128 value, chars_format fmt) noexcept
+CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
+CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, __float128 value, CXX20_FORMAT_DECORATE_NAME(__chars_format) fmt) noexcept
 {
   return __floating_to_chars_shortest(first, last, value, fmt);
 }
 
-to_chars_result
-CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, __float128 value, chars_format fmt,
+CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
+CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, __float128 value, CXX20_FORMAT_DECORATE_NAME(__chars_format) fmt,
 	 int precision) noexcept
 {
   return __floating_to_chars_precision(first, last, value, fmt, precision);
 }
 
-extern "C" to_chars_result
+extern "C" CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
 _ZSt8to_charsPcS_DF128_(char* first, char* last, __float128 value) noexcept
   __attribute__((alias ("_ZSt8to_charsPcS_u9__ieee128")));
 
-extern "C" to_chars_result
+extern "C" CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
 _ZSt8to_charsPcS_DF128_St12chars_format(char* first, char* last,
 					__float128 value,
-					chars_format fmt) noexcept
+					CXX20_FORMAT_DECORATE_NAME(__chars_format) fmt) noexcept
   __attribute__((alias ("_ZSt8to_charsPcS_u9__ieee128St12chars_format")));
 
-extern "C" to_chars_result
+extern "C" CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
 _ZSt8to_charsPcS_DF128_St12chars_formati(char* first, char* last,
 					 __float128 value,
-					 chars_format fmt,
+					 CXX20_FORMAT_DECORATE_NAME(__chars_format) fmt,
 					 int precision) noexcept
   __attribute__((alias ("_ZSt8to_charsPcS_u9__ieee128St12chars_formati")));
 #else
-to_chars_result
+CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
 CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, _Float128 value) noexcept
 {
-  return __floating_to_chars_shortest(first, last, value, chars_format{});
+  return __floating_to_chars_shortest(first, last, value, CXX20_FORMAT_DECORATE_NAME(__chars_format){});
 }
 
-to_chars_result
-CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, _Float128 value, chars_format fmt) noexcept
+CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
+CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, _Float128 value, CXX20_FORMAT_DECORATE_NAME(__chars_format) fmt) noexcept
 {
   return __floating_to_chars_shortest(first, last, value, fmt);
 }
 
-to_chars_result
-CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, _Float128 value, chars_format fmt,
+CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
+CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, _Float128 value, CXX20_FORMAT_DECORATE_NAME(__chars_format) fmt,
 	 int precision) noexcept
 {
   return __floating_to_chars_precision(first, last, value, fmt, precision);
@@ -1892,17 +1892,17 @@ CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, _Float128 value,
 #endif
 
 // Entrypoints for 16-bit floats.
-[[gnu::cold]] to_chars_result
+[[gnu::cold]] CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
 __to_chars_float16_t(char* first, char* last, float value,
-		     chars_format fmt) noexcept
+		     CXX20_FORMAT_DECORATE_NAME(__chars_format) fmt) noexcept
 {
   return __floating_to_chars_shortest(first, last,
 				      floating_type_float16_t{ value }, fmt);
 }
 
-[[gnu::cold]] to_chars_result
+[[gnu::cold]] CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
 __to_chars_bfloat16_t(char* first, char* last, float value,
-		      chars_format fmt) noexcept
+		      CXX20_FORMAT_DECORATE_NAME(__chars_format) fmt) noexcept
 {
   return __floating_to_chars_shortest(first, last,
 				      floating_type_bfloat16_t{ value }, fmt);
@@ -1910,18 +1910,18 @@ __to_chars_bfloat16_t(char* first, char* last, float value,
 
 #ifdef _GLIBCXX_LONG_DOUBLE_COMPAT
 // Map the -mlong-double-64 long double overloads to the double overloads.
-extern "C" to_chars_result
+extern "C" CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
 _ZSt8to_charsPcS_e(char* first, char* last, double value) noexcept
   __attribute__((alias ("_ZSt8to_charsPcS_d")));
 
-extern "C" to_chars_result
+extern "C" CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
 _ZSt8to_charsPcS_eSt12chars_format(char* first, char* last, double value,
-				   chars_format fmt) noexcept
+				   CXX20_FORMAT_DECORATE_NAME(__chars_format) fmt) noexcept
   __attribute__((alias ("_ZSt8to_charsPcS_dSt12chars_format")));
 
-extern "C" to_chars_result
+extern "C" CXX20_FORMAT_DECORATE_NAME(__to_chars_result)
 _ZSt8to_charsPcS_eSt12chars_formati(char* first, char* last, double value,
-				    chars_format fmt, int precision) noexcept
+				    CXX20_FORMAT_DECORATE_NAME(__chars_format) fmt, int precision) noexcept
   __attribute__((alias ("_ZSt8to_charsPcS_dSt12chars_formati")));
 #endif
 
