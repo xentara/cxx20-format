@@ -23,7 +23,7 @@
 #ifndef CXX20_FORMAT_CONFIG_H
 #define CXX20_FORMAT_CONFIG_H
 
-// the inline namespace used for the types
+// the inline namespace used for the library
 #define CXX20_FORMAT_NAMESPACE @CXX20_FORMAT_NAMESPACE@
 
 // the ELF visibility used for the namespace

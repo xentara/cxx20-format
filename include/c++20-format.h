@@ -68,7 +68,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
   // Output iterator that writes to a type-erase character sink.
   template<typename _CharT>
     class _Sink_iter;
-} // namespace CXX20_FORMAT_DECORATE_NAME(__format)
+} // namespace __format
 /// @endcond
 
   using format_context
@@ -169,7 +169,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
   inline void
   __failed_to_parse_format_spec()
   { __throw_format_error("format error: failed to parse format-spec"); }
-} // namespace CXX20_FORMAT_DECORATE_NAME(__format)
+} // namespace __format
   /// @endcond
 
   // [format.parse.ctx], class template basic_format_parse_context
@@ -1007,7 +1007,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
 	    case _Pres_b:
 	    case _Pres_B:
 	      __base_prefix = _M_spec._M_type == _Pres_b ? "0b" : "0B";
-	      __res = to_chars(__start, __end, __u, 2);
+	      __res = CXX20_FORMAT_DECORATE_NAME(__to_chars)(__start, __end, __u, 2);
 	      break;
 #if 0
 	    case _Pres_c:
@@ -1017,17 +1017,17 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
 	      // Should not reach here with _Pres_none for bool or charT, so:
 	      [[fallthrough]];
 	    case _Pres_d:
-	      __res = to_chars(__start, __end, __u, 10);
+	      __res = CXX20_FORMAT_DECORATE_NAME(__to_chars)(__start, __end, __u, 10);
 	      break;
 	    case _Pres_o:
 	      if (__i != 0)
 		__base_prefix = "0";
-	      __res = to_chars(__start, __end, __u, 8);
+	      __res = CXX20_FORMAT_DECORATE_NAME(__to_chars)(__start, __end, __u, 8);
 	      break;
 	    case _Pres_x:
 	    case _Pres_X:
 	      __base_prefix = _M_spec._M_type == _Pres_x ? "0x" : "0X";
-	      __res = to_chars(__start, __end, __u, 16);
+	      __res = CXX20_FORMAT_DECORATE_NAME(__to_chars)(__start, __end, __u, 16);
 	      if (_M_spec._M_type == _Pres_X)
 		for (auto __p = __start; __p != __res.ptr; ++__p)
 #if __has_builtin(__builtin_toupper)
@@ -1200,7 +1200,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
       // std::to_chars is not overloaded for int128 in strict mode.
       template<typename _Int>
 	static to_chars_result
-	to_chars(char* __first, char* __last, _Int __value, int __base)
+	CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Int __value, int __base)
 	{ return std::CXX20_FORMAT_NAMESPACE::__to_chars_i<_Int>(__first, __last, __value, __base); }
 #endif
 
@@ -1208,7 +1208,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
     };
 
   // Decide how 128-bit floating-point types should be formatted (or not).
-  // When supported, the typedef CXX20_FORMAT_DECORATE_NAME(__format)::__float128_t is the type that
+  // When supported, the typedef __format::__float128_t is the type that
   // format arguments should be converted to for storage in basic_format_arg.
   // Define the macro CXX20_FORMAT_FORMAT_F128 to say they're supported.
   // CXX20_FORMAT_FORMAT_F128=1 means __float128, _Float128 etc. will be formatted
@@ -1225,29 +1225,29 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
 
 #ifdef __LONG_DOUBLE_IEEE128__
   // These overloads exist in the library, but are not declared.
-  // Make them available as std::CXX20_FORMAT_DECORATE_NAME(__format)::to_chars.
+  // Make them available as std::__format::to_chars.
   to_chars_result
-  to_chars(char*, char*, __ibm128) noexcept
+  CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, __ibm128) noexcept
     __asm("_ZSt8to_charsPcS_e");
 
   to_chars_result
-  to_chars(char*, char*, __ibm128, chars_format) noexcept
+  CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, __ibm128, chars_format) noexcept
     __asm("_ZSt8to_charsPcS_eSt12chars_format");
 
   to_chars_result
-  to_chars(char*, char*, __ibm128, chars_format, int) noexcept
+  CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, __ibm128, chars_format, int) noexcept
     __asm("_ZSt8to_charsPcS_eSt12chars_formati");
 #elif __cplusplus == 202002L
   to_chars_result
-  to_chars(char*, char*, __ieee128) noexcept
+  CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, __ieee128) noexcept
     __asm("_ZSt8to_charsPcS_u9__ieee128");
 
   to_chars_result
-  to_chars(char*, char*, __ieee128, chars_format) noexcept
+  CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, __ieee128, chars_format) noexcept
     __asm("_ZSt8to_charsPcS_u9__ieee128St12chars_format");
 
   to_chars_result
-  to_chars(char*, char*, __ieee128, chars_format, int) noexcept
+  CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, __ieee128, chars_format, int) noexcept
     __asm("_ZSt8to_charsPcS_u9__ieee128St12chars_formati");
 #endif
 
@@ -1265,9 +1265,9 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
 
 # if __cplusplus == 202002L
   // These overloads exist in the library, but are not declared for C++20.
-  // Make them available as std::CXX20_FORMAT_DECORATE_NAME(__format)::to_chars.
+  // Make them available as std::__format::to_chars.
   to_chars_result
-  to_chars(char*, char*, _Float128) noexcept
+  CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, _Float128) noexcept
 #  if _GLIBCXX_INLINE_VERSION
     __asm("_ZNSt3__88to_charsEPcS0_DF128_");
 #  else
@@ -1275,7 +1275,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
 #  endif
 
   to_chars_result
-  to_chars(char*, char*, _Float128, chars_format) noexcept
+  CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, _Float128, chars_format) noexcept
 #  if _GLIBCXX_INLINE_VERSION
     __asm("_ZNSt3__88to_charsEPcS0_DF128_NS_12chars_formatE");
 #  else
@@ -1283,7 +1283,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
 #  endif
 
   to_chars_result
-  to_chars(char*, char*, _Float128, chars_format, int) noexcept
+  CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, _Float128, chars_format, int) noexcept
 #  if _GLIBCXX_INLINE_VERSION
     __asm("_ZNSt3__88to_charsEPcS0_DF128_NS_12chars_formatEi");
 #  else
@@ -1292,12 +1292,12 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
 # endif
 #endif
 
-  using std::CXX20_FORMAT_NAMESPACE::to_chars;
+  using std::CXX20_FORMAT_NAMESPACE::CXX20_FORMAT_DECORATE_NAME(__to_chars);
 
   // We can format a floating-point type iff it is usable with to_chars.
   template<typename _Tp>
     concept __formattable_float = requires (_Tp __t, char* __p)
-    { CXX20_FORMAT_DECORATE_NAME(__format)::to_chars(__p, __p, __t, chars_format::scientific, 6); };
+    { CXX20_FORMAT_DECORATE_NAME(__format)::CXX20_FORMAT_DECORATE_NAME(__to_chars)(__p, __p, __t, chars_format::scientific, 6); };
 
   template<__char _CharT>
     struct __formatter_fp
@@ -1455,11 +1455,11 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
 	  // Write value into buffer using std::to_chars.
 	  auto __to_chars = [&](char* __b, char* __e) {
 	    if (__use_prec)
-	      return CXX20_FORMAT_DECORATE_NAME(__format)::to_chars(__b, __e, __v, __fmt, __prec);
+	      return CXX20_FORMAT_DECORATE_NAME(__format)::CXX20_FORMAT_DECORATE_NAME(__to_chars)(__b, __e, __v, __fmt, __prec);
 	    else if (__fmt != chars_format{})
-	      return CXX20_FORMAT_DECORATE_NAME(__format)::to_chars(__b, __e, __v, __fmt);
+	      return CXX20_FORMAT_DECORATE_NAME(__format)::CXX20_FORMAT_DECORATE_NAME(__to_chars)(__b, __e, __v, __fmt);
 	    else
-	      return CXX20_FORMAT_DECORATE_NAME(__format)::to_chars(__b, __e, __v);
+	      return CXX20_FORMAT_DECORATE_NAME(__format)::CXX20_FORMAT_DECORATE_NAME(__to_chars)(__b, __e, __v);
 	  };
 
 	  // First try using stack buffer.
@@ -1709,7 +1709,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
       _Spec<_CharT> _M_spec{};
     };
 
-} // namespace CXX20_FORMAT_DECORATE_NAME(__format)
+} // namespace __format
 /// @endcond
 
   // Format a character.
@@ -2092,7 +2092,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
 	{
 	  auto __u = reinterpret_cast<__UINTPTR_TYPE__>(__v);
 	  char __buf[2 + sizeof(__v) * 2];
-	  auto [__ptr, __ec] = std::CXX20_FORMAT_NAMESPACE::to_chars(__buf + 2, std::end(__buf),
+	  auto [__ptr, __ec] = std::CXX20_FORMAT_NAMESPACE::CXX20_FORMAT_DECORATE_NAME(__to_chars)(__buf + 2, std::end(__buf),
 					     __u, 16);
 	  int __n = __ptr - __buf;
 	  __buf[0] = '0';
@@ -2224,7 +2224,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
     concept __formattable_impl
       = __parsable_with<_Tp, _Context> && __formattable_with<_Tp, _Context>;
 
-} // namespace CXX20_FORMAT_DECORATE_NAME(__format)
+} // namespace __format
 /// @endcond
 
 #if __cplusplus > 202002L
@@ -2246,7 +2246,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
   template<typename _Rg, typename _CharT>
     using __maybe_const_range
       = conditional_t<__const_formattable_range<_Rg, _CharT>, const _Rg, _Rg>;
-} // namespace CXX20_FORMAT_DECORATE_NAME(__format)
+} // namespace __format
   /// @endcond
 #endif // format_ranges
 
@@ -2565,7 +2565,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
 	    if constexpr (!is_integral_v<iter_difference_t<_OutIter>>
 			    || sizeof(__n) > sizeof(size_t))
 	      {
-		// __int128 or CXX20_FORMAT_DECORATE_NAME(__detail)::__max_diff_type
+		// __int128 or __detail::__max_diff_type
 		auto __m = iter_difference_t<_OutIter>((size_t)-1);
 		if (__n > __m)
 		  __n = __m;
@@ -2753,7 +2753,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
   template<typename _Context, typename... _Args>
     class _Arg_store;
 
-} // namespace CXX20_FORMAT_DECORATE_NAME(__format)
+} // namespace __format
 /// @endcond
 
   template<typename _Context>
@@ -3139,7 +3139,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
 	__packed_types = (__packed_types << _Bits) | *__i;
       return __packed_types;
     }
-} // namespace CXX20_FORMAT_DECORATE_NAME(__format)
+} // namespace __format
 /// @endcond
 
   template<typename _Context>
@@ -3330,7 +3330,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
     __do_vformat_to(_Out, basic_string_view<_CharT>,
 		    const basic_format_args<_Context>&,
 		    const locale* = nullptr);
-} // namespace CXX20_FORMAT_DECORATE_NAME(__format)
+} // namespace __format
 /// @endcond
 
   /** Context for std::format and similar functions.
@@ -3641,7 +3641,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
 	return std::move(__sink)._M_finish().out;
     }
 
-} // namespace CXX20_FORMAT_DECORATE_NAME(__format)
+} // namespace __format
 /// @endcond
 
   template<typename _CharT, typename... _Args>
@@ -3883,7 +3883,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
       }
     };
 #endif
-} // namespace CXX20_FORMAT_DECORATE_NAME(__format)
+} // namespace __format
 /// @endcond
 
   template<typename... _Args>
@@ -3988,7 +3988,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
   // [format.range.fmtdef], class template range-default-formatter
   template<range_format _Kind, ranges::input_range _Rg, typename _CharT>
     struct __range_default_formatter; // TODO
-} // namespace CXX20_FORMAT_DECORATE_NAME(__format)
+} // namespace __format
 /// @endcond
 
   // [format.range.fmtmap], [format.range.fmtset], [format.range.fmtstr],

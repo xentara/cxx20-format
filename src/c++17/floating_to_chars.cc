@@ -675,7 +675,7 @@ namespace
   // An implementation of base-10 std::to_chars for the uint128_t class type,
   // used by targets that lack __int128.
   std::to_chars_result
-  to_chars(char* first, char* const last, uint128_t x)
+  CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* const last, uint128_t x)
   {
     const int len = ryu::generic128::decimalLength(x);
     if (last - first < len)
@@ -1033,7 +1033,7 @@ template<typename T>
     *first++ = 'p';
     if (written_exponent >= 0)
       *first++ = '+';
-    const to_chars_result result = to_chars(first, last, written_exponent);
+    const to_chars_result result = CXX20_FORMAT_DECORATE_NAME(__to_chars)(first, last, written_exponent);
     __glibcxx_assert(result.ec == errc{} && result.ptr == expected_output_end);
     return result;
   }
@@ -1219,7 +1219,7 @@ template<typename T>
 	    // writing out fd.mantissa followed by fd.exponent many 0s.
 	    if (fd.sign)
 	      *first++ = '-';
-	    to_chars_result result = to_chars(first, last, fd.mantissa);
+	    to_chars_result result = CXX20_FORMAT_DECORATE_NAME(__to_chars)(first, last, fd.mantissa);
 	    __glibcxx_assert(result.ec == errc{});
 	    memset(result.ptr, '0', fd.exponent);
 	    result.ptr += fd.exponent;
@@ -1277,7 +1277,7 @@ template<typename T>
 	    const int leading_zeros = -fd.exponent - mantissa_length;
 	    memset(first, '0', leading_zeros);
 	    first += leading_zeros;
-	    const to_chars_result result = to_chars(first, last, fd.mantissa);
+	    const to_chars_result result = CXX20_FORMAT_DECORATE_NAME(__to_chars)(first, last, fd.mantissa);
 	    const int output_length = result.ptr - orig_first;
 	    __glibcxx_assert(output_length == expected_output_length
 			     && result.ec == errc{});
@@ -1289,7 +1289,7 @@ template<typename T>
 	    const auto orig_first = first;
 	    if (fd.sign)
 	      *first++ = '-';
-	    to_chars_result result = to_chars(first, last, fd.mantissa);
+	    to_chars_result result = CXX20_FORMAT_DECORATE_NAME(__to_chars)(first, last, fd.mantissa);
 	    __glibcxx_assert(result.ec == errc{});
 	    // Make space for and write the decimal point in the correct spot.
 	    memmove(&result.ptr[fd.exponent+1], &result.ptr[fd.exponent],
@@ -1770,35 +1770,35 @@ template<typename T>
 
 // Define the overloads for float.
 to_chars_result
-to_chars(char* first, char* last, float value) noexcept
+CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, float value) noexcept
 { return __floating_to_chars_shortest(first, last, value, chars_format{}); }
 
 to_chars_result
-to_chars(char* first, char* last, float value, chars_format fmt) noexcept
+CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, float value, chars_format fmt) noexcept
 { return __floating_to_chars_shortest(first, last, value, fmt); }
 
 to_chars_result
-to_chars(char* first, char* last, float value, chars_format fmt,
+CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, float value, chars_format fmt,
 	 int precision) noexcept
 { return __floating_to_chars_precision(first, last, value, fmt, precision); }
 
 // Define the overloads for double.
 to_chars_result
-to_chars(char* first, char* last, double value) noexcept
+CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, double value) noexcept
 { return __floating_to_chars_shortest(first, last, value, chars_format{}); }
 
 to_chars_result
-to_chars(char* first, char* last, double value, chars_format fmt) noexcept
+CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, double value, chars_format fmt) noexcept
 { return __floating_to_chars_shortest(first, last, value, fmt); }
 
 to_chars_result
-to_chars(char* first, char* last, double value, chars_format fmt,
+CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, double value, chars_format fmt,
 	 int precision) noexcept
 { return __floating_to_chars_precision(first, last, value, fmt, precision); }
 
 // Define the overloads for long double.
 to_chars_result
-to_chars(char* first, char* last, long double value) noexcept
+CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, long double value) noexcept
 {
   if constexpr (LONG_DOUBLE_KIND == LDK_BINARY64
 		|| LONG_DOUBLE_KIND == LDK_UNSUPPORTED)
@@ -1809,7 +1809,7 @@ to_chars(char* first, char* last, long double value) noexcept
 }
 
 to_chars_result
-to_chars(char* first, char* last, long double value, chars_format fmt) noexcept
+CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, long double value, chars_format fmt) noexcept
 {
   if constexpr (LONG_DOUBLE_KIND == LDK_BINARY64
 		|| LONG_DOUBLE_KIND == LDK_UNSUPPORTED)
@@ -1820,7 +1820,7 @@ to_chars(char* first, char* last, long double value, chars_format fmt) noexcept
 }
 
 to_chars_result
-to_chars(char* first, char* last, long double value, chars_format fmt,
+CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, long double value, chars_format fmt,
 	 int precision) noexcept
 {
   if constexpr (LONG_DOUBLE_KIND == LDK_BINARY64
@@ -1835,19 +1835,19 @@ to_chars(char* first, char* last, long double value, chars_format fmt,
 #ifdef FLOAT128_TO_CHARS
 #ifdef _GLIBCXX_LONG_DOUBLE_ALT128_COMPAT
 to_chars_result
-to_chars(char* first, char* last, __float128 value) noexcept
+CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, __float128 value) noexcept
 {
   return __floating_to_chars_shortest(first, last, value, chars_format{});
 }
 
 to_chars_result
-to_chars(char* first, char* last, __float128 value, chars_format fmt) noexcept
+CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, __float128 value, chars_format fmt) noexcept
 {
   return __floating_to_chars_shortest(first, last, value, fmt);
 }
 
 to_chars_result
-to_chars(char* first, char* last, __float128 value, chars_format fmt,
+CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, __float128 value, chars_format fmt,
 	 int precision) noexcept
 {
   return __floating_to_chars_precision(first, last, value, fmt, precision);
@@ -1871,19 +1871,19 @@ _ZSt8to_charsPcS_DF128_St12chars_formati(char* first, char* last,
   __attribute__((alias ("_ZSt8to_charsPcS_u9__ieee128St12chars_formati")));
 #else
 to_chars_result
-to_chars(char* first, char* last, _Float128 value) noexcept
+CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, _Float128 value) noexcept
 {
   return __floating_to_chars_shortest(first, last, value, chars_format{});
 }
 
 to_chars_result
-to_chars(char* first, char* last, _Float128 value, chars_format fmt) noexcept
+CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, _Float128 value, chars_format fmt) noexcept
 {
   return __floating_to_chars_shortest(first, last, value, fmt);
 }
 
 to_chars_result
-to_chars(char* first, char* last, _Float128 value, chars_format fmt,
+CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, _Float128 value, chars_format fmt,
 	 int precision) noexcept
 {
   return __floating_to_chars_precision(first, last, value, fmt, precision);

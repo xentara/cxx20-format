@@ -112,7 +112,7 @@ namespace CXX20_FORMAT_DECORATE_NAME(__detail)
 	__first[0] = '0' + __val;
     }
 
-} // namespace CXX20_FORMAT_DECORATE_NAME(__detail)
+} // namespace __detail
 } // namespace CXX20_FORMAT_NAMESPACE
 } // namespace std
 #endif // C++11
