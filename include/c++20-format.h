@@ -57,6 +57,18 @@ namespace std CXX20_FORMAT_VISIBILITY_ATTRIBUTE
 inline namespace CXX20_FORMAT_NAMESPACE
 {
 
+// 201907 Text Formatting, Integration of chrono, printf corner cases.
+// 202106 std::format improvements.
+// 202110 Fixing locale handling in chrono formatters, generator-like types.
+// 202207 Encodings in localized formatting of chrono, basic-format-string.
+#define __cpp_lib_format 202106L
+
+#if __cplusplus > 202002L
+// 202207 P2286R8 Formatting Ranges
+// 202207 P2585R1 Improving default container formatting
+// TODO: #define __cpp_lib_format_ranges 202207L
+#endif
+
   // [format.context], class template basic_format_context
   template<typename _Out, typename _CharT> class basic_format_context;
 
