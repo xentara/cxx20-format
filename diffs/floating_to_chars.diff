@@ -1,0 +1,96 @@
+25c25
+< #include <charconv>
+---
+> #include <bits/c++20-format/charconv.h>
+678c678
+<   to_chars(char* first, char* const last, uint128_t x)
+---
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* const last, uint128_t x)
+699c699,701
+< namespace std _GLIBCXX_VISIBILITY(default)
+---
+> namespace std CXX20_FORMAT_VISIBILITY_ATTRIBUTE
+> {
+> inline namespace CXX20_FORMAT_NAMESPACE
+701d702
+< _GLIBCXX_BEGIN_NAMESPACE_VERSION
+1035c1036
+<     const to_chars_result result = to_chars(first, last, written_exponent);
+---
+>     const to_chars_result result = CXX20_FORMAT_DECORATE_NAME(__to_chars)(first, last, written_exponent);
+1221c1222
+< 	    to_chars_result result = to_chars(first, last, fd.mantissa);
+---
+> 	    to_chars_result result = CXX20_FORMAT_DECORATE_NAME(__to_chars)(first, last, fd.mantissa);
+1279c1280
+< 	    const to_chars_result result = to_chars(first, last, fd.mantissa);
+---
+> 	    const to_chars_result result = CXX20_FORMAT_DECORATE_NAME(__to_chars)(first, last, fd.mantissa);
+1291c1292
+< 	    to_chars_result result = to_chars(first, last, fd.mantissa);
+---
+> 	    to_chars_result result = CXX20_FORMAT_DECORATE_NAME(__to_chars)(first, last, fd.mantissa);
+1772c1773
+< to_chars(char* first, char* last, float value) noexcept
+---
+> CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, float value) noexcept
+1776c1777
+< to_chars(char* first, char* last, float value, chars_format fmt) noexcept
+---
+> CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, float value, chars_format fmt) noexcept
+1780c1781
+< to_chars(char* first, char* last, float value, chars_format fmt,
+---
+> CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, float value, chars_format fmt,
+1786c1787
+< to_chars(char* first, char* last, double value) noexcept
+---
+> CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, double value) noexcept
+1790c1791
+< to_chars(char* first, char* last, double value, chars_format fmt) noexcept
+---
+> CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, double value, chars_format fmt) noexcept
+1794c1795
+< to_chars(char* first, char* last, double value, chars_format fmt,
+---
+> CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, double value, chars_format fmt,
+1800c1801
+< to_chars(char* first, char* last, long double value) noexcept
+---
+> CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, long double value) noexcept
+1811c1812
+< to_chars(char* first, char* last, long double value, chars_format fmt) noexcept
+---
+> CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, long double value, chars_format fmt) noexcept
+1822c1823
+< to_chars(char* first, char* last, long double value, chars_format fmt,
+---
+> CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, long double value, chars_format fmt,
+1837c1838
+< to_chars(char* first, char* last, __float128 value) noexcept
+---
+> CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, __float128 value) noexcept
+1843c1844
+< to_chars(char* first, char* last, __float128 value, chars_format fmt) noexcept
+---
+> CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, __float128 value, chars_format fmt) noexcept
+1849c1850
+< to_chars(char* first, char* last, __float128 value, chars_format fmt,
+---
+> CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, __float128 value, chars_format fmt,
+1873c1874
+< to_chars(char* first, char* last, _Float128 value) noexcept
+---
+> CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, _Float128 value) noexcept
+1879c1880
+< to_chars(char* first, char* last, _Float128 value, chars_format fmt) noexcept
+---
+> CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, _Float128 value, chars_format fmt) noexcept
+1885c1886
+< to_chars(char* first, char* last, _Float128 value, chars_format fmt,
+---
+> CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* first, char* last, _Float128 value, chars_format fmt,
+1927c1928
+< _GLIBCXX_END_NAMESPACE_VERSION
+---
+> } // namespace CXX20_FORMAT_NAMESPACE

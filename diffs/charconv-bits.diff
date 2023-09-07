@@ -1,0 +1,27 @@
+30,31c30,33
+< #ifndef _GLIBCXX_CHARCONV_H
+< #define _GLIBCXX_CHARCONV_H 1
+---
+> #ifndef CXX20_FORMAT_CHARCONV_H
+> #define CXX20_FORMAT_CHARCONV_H 1
+> 
+> #include <bits/c++20-format/global.h>
+40c42,44
+< namespace std _GLIBCXX_VISIBILITY(default)
+---
+> namespace std CXX20_FORMAT_VISIBILITY_ATTRIBUTE
+> {
+> inline namespace CXX20_FORMAT_NAMESPACE
+42,43c46
+< _GLIBCXX_BEGIN_NAMESPACE_VERSION
+< namespace __detail
+---
+> namespace CXX20_FORMAT_DECORATE_NAME(__detail)
+113c116
+< _GLIBCXX_END_NAMESPACE_VERSION
+---
+> } // namespace CXX20_FORMAT_NAMESPACE
+116c119
+< #endif // _GLIBCXX_CHARCONV_H
+---
+> #endif // CXX20_FORMAT_CHARCONV_H

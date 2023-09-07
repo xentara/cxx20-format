@@ -1,0 +1,773 @@
+25,27c25,26
+< /** @file include/format
+<  *  This is a Standard C++ Library header.
+<  */
+---
+> #ifndef CXX20_FORMAT_H
+> #define CXX20_FORMAT_H 1
+29,30c28
+< #ifndef _GLIBCXX_FORMAT
+< #define _GLIBCXX_FORMAT 1
+---
+> #include <bits/c++20-format/global.h>
+34,35d31
+< #include <bits/requires_hosted.h> // for std::string
+< 
+39c35
+< #include <charconv>
+---
+> #include <bits/c++20-format/charconv.h>
+59c55,57
+< namespace std _GLIBCXX_VISIBILITY(default)
+---
+> namespace std CXX20_FORMAT_VISIBILITY_ATTRIBUTE
+> {
+> inline namespace CXX20_FORMAT_NAMESPACE
+61d58
+< _GLIBCXX_BEGIN_NAMESPACE_VERSION
+79c76
+< namespace __format
+---
+> namespace CXX20_FORMAT_DECORATE_NAME(__format)
+90c87
+<     = basic_format_context<__format::_Sink_iter<char>, char>;
+---
+>     = basic_format_context<CXX20_FORMAT_DECORATE_NAME(__format)::_Sink_iter<char>, char>;
+92c89
+<     = basic_format_context<__format::_Sink_iter<wchar_t>, wchar_t>;
+---
+>     = basic_format_context<CXX20_FORMAT_DECORATE_NAME(__format)::_Sink_iter<wchar_t>, wchar_t>;
+159c156
+< namespace __format
+---
+> namespace CXX20_FORMAT_DECORATE_NAME(__format)
+223c220
+< 	  __format::__conflicting_indexing_in_format_string();
+---
+> 	  CXX20_FORMAT_DECORATE_NAME(__format)::__conflicting_indexing_in_format_string();
+230c227
+< 	    __format::__invalid_arg_id_in_format_string();
+---
+> 	    CXX20_FORMAT_DECORATE_NAME(__format)::__invalid_arg_id_in_format_string();
+238c235
+< 	  __format::__conflicting_indexing_in_format_string();
+---
+> 	  CXX20_FORMAT_DECORATE_NAME(__format)::__conflicting_indexing_in_format_string();
+243c240
+< 	    __format::__invalid_arg_id_in_format_string();
+---
+> 	    CXX20_FORMAT_DECORATE_NAME(__format)::__invalid_arg_id_in_format_string();
+262c259
+< namespace __format
+---
+> namespace CXX20_FORMAT_DECORATE_NAME(__format)
+277c274
+< 	  if (__detail::__from_chars_alnum<true>(__first, __last, __val, 10)
+---
+> 	  if (CXX20_FORMAT_DECORATE_NAME(__detail)::__from_chars_alnum<true>(__first, __last, __val, 10)
+288c285
+< 	  auto [__v, __ptr] = __format::__parse_integer(__buf, __buf + __n);
+---
+> 	  auto [__v, __ptr] = CXX20_FORMAT_DECORATE_NAME(__format)::__parse_integer(__buf, __buf + __n);
+312c309
+< 	    return __format::__parse_integer(__first, __last);
+---
+> 	    return CXX20_FORMAT_DECORATE_NAME(__format)::__parse_integer(__first, __last);
+353c350
+<   { return std::__detail::__from_chars_alnum_to_val(__c) < 10; }
+---
+>   { return std::CXX20_FORMAT_DECORATE_NAME(__detail)::__from_chars_alnum_to_val(__c) < 10; }
+356c353
+<   { return std::__detail::__from_chars_alnum_to_val(__c) < 16; }
+---
+>   { return std::CXX20_FORMAT_DECORATE_NAME(__detail)::__from_chars_alnum_to_val(__c) < 16; }
+469c466
+< 	if (__format::__is_digit(*__first))
+---
+> 	if (CXX20_FORMAT_DECORATE_NAME(__format)::__is_digit(*__first))
+471c468
+< 	    auto [__v, __ptr] = __format::__parse_integer(__first, __last);
+---
+> 	    auto [__v, __ptr] = CXX20_FORMAT_DECORATE_NAME(__format)::__parse_integer(__first, __last);
+483c480
+< 	      __format::__unmatched_left_brace_in_format_string();
+---
+> 	      CXX20_FORMAT_DECORATE_NAME(__format)::__unmatched_left_brace_in_format_string();
+488c485
+< 		auto [__v, __ptr] = __format::__parse_arg_id(__first, __last);
+---
+> 		auto [__v, __ptr] = CXX20_FORMAT_DECORATE_NAME(__format)::__parse_arg_id(__first, __last);
+490c487
+< 		  __format::__invalid_arg_id_in_format_string();
+---
+> 		  CXX20_FORMAT_DECORATE_NAME(__format)::__invalid_arg_id_in_format_string();
+555c552
+< 	    __width = __format::__int_from_arg(__ctx.arg(_M_width));
+---
+> 	    __width = CXX20_FORMAT_DECORATE_NAME(__format)::__int_from_arg(__ctx.arg(_M_width));
+567c564
+< 	    __prec = __format::__int_from_arg(__ctx.arg(_M_prec));
+---
+> 	    __prec = CXX20_FORMAT_DECORATE_NAME(__format)::__int_from_arg(__ctx.arg(_M_prec));
+620c617
+< 	    __o = __format::__write(std::move(__o), __padding);
+---
+> 	    __o = CXX20_FORMAT_DECORATE_NAME(__format)::__write(std::move(__o), __padding);
+624c621
+< 	  __o = __format::__write(std::move(__o), __padding.substr(0, __n));
+---
+> 	  __o = CXX20_FORMAT_DECORATE_NAME(__format)::__write(std::move(__o), __padding.substr(0, __n));
+653c650
+<       __out = __format::__write(std::move(__out), __str);
+---
+>       __out = CXX20_FORMAT_DECORATE_NAME(__format)::__write(std::move(__out), __str);
+672c669
+< 	return __format::__write(__fc.out(), __str);
+---
+> 	return CXX20_FORMAT_DECORATE_NAME(__format)::__write(__fc.out(), __str);
+679c676
+<       return __format::__write_padded(__fc.out(), __str, __align, __nfill,
+---
+>       return CXX20_FORMAT_DECORATE_NAME(__format)::__write_padded(__fc.out(), __str, __align, __nfill,
+810c807
+< 	__format::__failed_to_parse_format_spec();
+---
+> 	CXX20_FORMAT_DECORATE_NAME(__format)::__failed_to_parse_format_spec();
+825c822
+< 	    return __format::__write(__fc.out(), __s);
+---
+> 	    return CXX20_FORMAT_DECORATE_NAME(__format)::__write(__fc.out(), __s);
+839c836
+< 	  return __format::__write_padded_as_spec(__s, __estimated_width,
+---
+> 	  return CXX20_FORMAT_DECORATE_NAME(__format)::__write_padded_as_spec(__s, __estimated_width,
+967c964
+< 	__format::__failed_to_parse_format_spec();
+---
+> 	CXX20_FORMAT_DECORATE_NAME(__format)::__failed_to_parse_format_spec();
+1025c1022
+< 	      __res = to_chars(__start, __end, __u, 2);
+---
+> 	      __res = CXX20_FORMAT_DECORATE_NAME(__to_chars)(__start, __end, __u, 2);
+1035c1032
+< 	      __res = to_chars(__start, __end, __u, 10);
+---
+> 	      __res = CXX20_FORMAT_DECORATE_NAME(__to_chars)(__start, __end, __u, 10);
+1040c1037
+< 	      __res = to_chars(__start, __end, __u, 8);
+---
+> 	      __res = CXX20_FORMAT_DECORATE_NAME(__to_chars)(__start, __end, __u, 8);
+1045c1042
+< 	      __res = to_chars(__start, __end, __u, 16);
+---
+> 	      __res = CXX20_FORMAT_DECORATE_NAME(__to_chars)(__start, __end, __u, 16);
+1064c1061
+< 	  __start = __format::__put_sign(__i, _M_spec._M_sign, __start - 1);
+---
+> 	  __start = CXX20_FORMAT_DECORATE_NAME(__format)::__put_sign(__i, _M_spec._M_sign, __start - 1);
+1096c1093
+< 	  return __format::__write_padded_as_spec(__s, __est_width, __fc,
+---
+> 	  return CXX20_FORMAT_DECORATE_NAME(__format)::__write_padded_as_spec(__s, __est_width, __fc,
+1105c1102
+< 	  return __format::__write_padded_as_spec({&__c, 1u}, 1, __fc, _M_spec);
+---
+> 	  return CXX20_FORMAT_DECORATE_NAME(__format)::__write_padded_as_spec({&__c, 1u}, 1, __fc, _M_spec);
+1180c1177
+< 	    return __format::__write(__fc.out(), __str);
+---
+> 	    return CXX20_FORMAT_DECORATE_NAME(__format)::__write(__fc.out(), __str);
+1196c1193
+< 		      __out = __format::__write(std::move(__out),
+---
+> 		      __out = CXX20_FORMAT_DECORATE_NAME(__format)::__write(std::move(__out),
+1204c1201
+< 	  return __format::__write_padded(std::move(__out), __str,
+---
+> 	  return CXX20_FORMAT_DECORATE_NAME(__format)::__write_padded(std::move(__out), __str,
+1218,1219c1215,1216
+< 	to_chars(char* __first, char* __last, _Int __value, int __base)
+< 	{ return std::__to_chars_i<_Int>(__first, __last, __value, __base); }
+---
+> 	CXX20_FORMAT_DECORATE_NAME(__to_chars)(char* __first, char* __last, _Int __value, int __base)
+> 	{ return std::CXX20_FORMAT_NAMESPACE::__to_chars_i<_Int>(__first, __last, __value, __base); }
+1228,1229c1225,1226
+<   // Define the macro _GLIBCXX_FORMAT_F128 to say they're supported.
+<   // _GLIBCXX_FORMAT_F128=1 means __float128, _Float128 etc. will be formatted
+---
+>   // Define the macro CXX20_FORMAT_FORMAT_F128 to say they're supported.
+>   // CXX20_FORMAT_FORMAT_F128=1 means __float128, _Float128 etc. will be formatted
+1231c1228
+<   // _GLIBCXX_FORMAT_F128=2 means basic_format_arg needs to enable explicit
+---
+>   // CXX20_FORMAT_FORMAT_F128=2 means basic_format_arg needs to enable explicit
+1233c1230
+< #undef _GLIBCXX_FORMAT_F128
+---
+> #undef CXX20_FORMAT_FORMAT_F128
+1239c1236
+< # define _GLIBCXX_FORMAT_F128 1
+---
+> # define CXX20_FORMAT_FORMAT_F128 1
+1245c1242
+<   to_chars(char*, char*, __ibm128) noexcept
+---
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, __ibm128) noexcept
+1249c1246
+<   to_chars(char*, char*, __ibm128, chars_format) noexcept
+---
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, __ibm128, chars_format) noexcept
+1253c1250
+<   to_chars(char*, char*, __ibm128, chars_format, int) noexcept
+---
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, __ibm128, chars_format, int) noexcept
+1257c1254
+<   to_chars(char*, char*, __ieee128) noexcept
+---
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, __ieee128) noexcept
+1261c1258
+<   to_chars(char*, char*, __ieee128, chars_format) noexcept
+---
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, __ieee128, chars_format) noexcept
+1265c1262
+<   to_chars(char*, char*, __ieee128, chars_format, int) noexcept
+---
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, __ieee128, chars_format, int) noexcept
+1273c1270
+< # define _GLIBCXX_FORMAT_F128 1
+---
+> # define CXX20_FORMAT_FORMAT_F128 1
+1279c1276
+< # define _GLIBCXX_FORMAT_F128 2
+---
+> # define CXX20_FORMAT_FORMAT_F128 2
+1285c1282
+<   to_chars(char*, char*, _Float128) noexcept
+---
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, _Float128) noexcept
+1293c1290
+<   to_chars(char*, char*, _Float128, chars_format) noexcept
+---
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, _Float128, chars_format) noexcept
+1301c1298
+<   to_chars(char*, char*, _Float128, chars_format, int) noexcept
+---
+>   CXX20_FORMAT_DECORATE_NAME(__to_chars)(char*, char*, _Float128, chars_format, int) noexcept
+1310c1307
+<   using std::to_chars;
+---
+>   using std::CXX20_FORMAT_NAMESPACE::CXX20_FORMAT_DECORATE_NAME(__to_chars);
+1315c1312
+<     { __format::to_chars(__p, __p, __t, chars_format::scientific, 6); };
+---
+>     { CXX20_FORMAT_DECORATE_NAME(__format)::CXX20_FORMAT_DECORATE_NAME(__to_chars)(__p, __p, __t, chars_format::scientific, 6); };
+1410c1407
+< 	__format::__failed_to_parse_format_spec();
+---
+> 	CXX20_FORMAT_DECORATE_NAME(__format)::__failed_to_parse_format_spec();
+1473c1470
+< 	      return __format::to_chars(__b, __e, __v, __fmt, __prec);
+---
+> 	      return CXX20_FORMAT_DECORATE_NAME(__format)::CXX20_FORMAT_DECORATE_NAME(__to_chars)(__b, __e, __v, __fmt, __prec);
+1475c1472
+< 	      return __format::to_chars(__b, __e, __v, __fmt);
+---
+> 	      return CXX20_FORMAT_DECORATE_NAME(__format)::CXX20_FORMAT_DECORATE_NAME(__to_chars)(__b, __e, __v, __fmt);
+1477c1474
+< 	      return __format::to_chars(__b, __e, __v);
+---
+> 	      return CXX20_FORMAT_DECORATE_NAME(__format)::CXX20_FORMAT_DECORATE_NAME(__to_chars)(__b, __e, __v);
+1553c1550
+< 		  if (!__format::__is_xdigit(__s[0]))
+---
+> 		  if (!CXX20_FORMAT_DECORATE_NAME(__format)::__is_xdigit(__s[0]))
+1629c1626
+< 	    return __format::__write(__fc.out(), __str);
+---
+> 	    return CXX20_FORMAT_DECORATE_NAME(__format)::__write(__fc.out(), __str);
+1643c1640
+< 		  if (!__format::__is_xdigit(__narrow_str[0]))
+---
+> 		  if (!CXX20_FORMAT_DECORATE_NAME(__format)::__is_xdigit(__narrow_str[0]))
+1652c1649
+< 	  return __format::__write_padded(std::move(__out), __str,
+---
+> 	  return CXX20_FORMAT_DECORATE_NAME(__format)::__write_padded(std::move(__out), __str,
+1731c1728
+<   template<__format::__char _CharT>
+---
+>   template<CXX20_FORMAT_DECORATE_NAME(__format)::__char _CharT>
+1746c1743
+< 	  if (_M_f._M_spec._M_type == __format::_Pres_none)
+---
+> 	  if (_M_f._M_spec._M_type == CXX20_FORMAT_DECORATE_NAME(__format)::_Pres_none)
+1748c1745
+< 	  else if (_M_f._M_spec._M_type == __format::_Pres_esc)
+---
+> 	  else if (_M_f._M_spec._M_type == CXX20_FORMAT_DECORATE_NAME(__format)::_Pres_esc)
+1760c1757
+<       { _M_f._M_spec._M_type = __format::_Pres_esc; }
+---
+>       { _M_f._M_spec._M_type = CXX20_FORMAT_DECORATE_NAME(__format)::_Pres_esc; }
+1764c1761
+<       __format::__formatter_int<_CharT> _M_f;
+---
+>       CXX20_FORMAT_DECORATE_NAME(__format)::__formatter_int<_CharT> _M_f;
+1783c1780
+< 	  if (_M_f._M_spec._M_type == __format::_Pres_none)
+---
+> 	  if (_M_f._M_spec._M_type == CXX20_FORMAT_DECORATE_NAME(__format)::_Pres_none)
+1785c1782
+< 	  else if (_M_f._M_spec._M_type == __format::_Pres_esc)
+---
+> 	  else if (_M_f._M_spec._M_type == CXX20_FORMAT_DECORATE_NAME(__format)::_Pres_esc)
+1796c1793
+<       { _M_f._M_spec._M_type = __format::_Pres_esc; }
+---
+>       { _M_f._M_spec._M_type = CXX20_FORMAT_DECORATE_NAME(__format)::_Pres_esc; }
+1799c1796
+<       __format::__formatter_int<wchar_t> _M_f;
+---
+>       CXX20_FORMAT_DECORATE_NAME(__format)::__formatter_int<wchar_t> _M_f;
+1805c1802
+<   template<__format::__char _CharT>
+---
+>   template<CXX20_FORMAT_DECORATE_NAME(__format)::__char _CharT>
+1824c1821
+<       __format::__formatter_str<_CharT> _M_f;
+---
+>       CXX20_FORMAT_DECORATE_NAME(__format)::__formatter_str<_CharT> _M_f;
+1827c1824
+<   template<__format::__char _CharT>
+---
+>   template<CXX20_FORMAT_DECORATE_NAME(__format)::__char _CharT>
+1847c1844
+<       __format::__formatter_str<_CharT> _M_f;
+---
+>       CXX20_FORMAT_DECORATE_NAME(__format)::__formatter_str<_CharT> _M_f;
+1850c1847
+<   template<__format::__char _CharT, size_t _Nm>
+---
+>   template<CXX20_FORMAT_DECORATE_NAME(__format)::__char _CharT, size_t _Nm>
+1869c1866
+<       __format::__formatter_str<_CharT> _M_f;
+---
+>       CXX20_FORMAT_DECORATE_NAME(__format)::__formatter_str<_CharT> _M_f;
+1893c1890
+<       __format::__formatter_str<char> _M_f;
+---
+>       CXX20_FORMAT_DECORATE_NAME(__format)::__formatter_str<char> _M_f;
+1917c1914
+<       __format::__formatter_str<wchar_t> _M_f;
+---
+>       CXX20_FORMAT_DECORATE_NAME(__format)::__formatter_str<wchar_t> _M_f;
+1941c1938
+<       __format::__formatter_str<char> _M_f;
+---
+>       CXX20_FORMAT_DECORATE_NAME(__format)::__formatter_str<char> _M_f;
+1965c1962
+<       __format::__formatter_str<wchar_t> _M_f;
+---
+>       CXX20_FORMAT_DECORATE_NAME(__format)::__formatter_str<wchar_t> _M_f;
+1970c1967
+<   template<integral _Tp, __format::__char _CharT>
+---
+>   template<integral _Tp, CXX20_FORMAT_DECORATE_NAME(__format)::__char _CharT>
+1989c1986
+<       __format::__formatter_int<_CharT> _M_f;
+---
+>       CXX20_FORMAT_DECORATE_NAME(__format)::__formatter_int<_CharT> _M_f;
+1993c1990
+<   template<typename _Tp, __format::__char _CharT>
+---
+>   template<typename _Tp, CXX20_FORMAT_DECORATE_NAME(__format)::__char _CharT>
+2012c2009
+<       __format::__formatter_int<_CharT> _M_f;
+---
+>       CXX20_FORMAT_DECORATE_NAME(__format)::__formatter_int<_CharT> _M_f;
+2017c2014
+<   template<__format::__formattable_float _Tp, __format::__char _CharT>
+---
+>   template<CXX20_FORMAT_DECORATE_NAME(__format)::__formattable_float _Tp, CXX20_FORMAT_DECORATE_NAME(__format)::__char _CharT>
+2033c2030
+<       __format::__formatter_fp<_CharT> _M_f;
+---
+>       CXX20_FORMAT_DECORATE_NAME(__format)::__formatter_fp<_CharT> _M_f;
+2039c2036
+<   template<__format::__char _CharT>
+---
+>   template<CXX20_FORMAT_DECORATE_NAME(__format)::__char _CharT>
+2047c2044
+< 	__format::_Spec<_CharT> __spec{};
+---
+> 	CXX20_FORMAT_DECORATE_NAME(__format)::_Spec<_CharT> __spec{};
+2073c2070
+< #define _GLIBCXX_P2518R3 (__cplusplus > 202302L || ! defined __STRICT_ANSI__)
+---
+> #define CXX20_P2518R3 (__cplusplus > 202302L || ! defined __STRICT_ANSI__)
+2075c2072
+< #if _GLIBCXX_P2518R3
+---
+> #if CXX20_P2518R3
+2087c2084
+< #if _GLIBCXX_P2518R3
+---
+> #if CXX20_P2518R3
+2092c2089
+< 	      __spec._M_type = __format::_Pres_P;
+---
+> 	      __spec._M_type = CXX20_FORMAT_DECORATE_NAME(__format)::_Pres_P;
+2101c2098
+< 	__format::__failed_to_parse_format_spec();
+---
+> 	CXX20_FORMAT_DECORATE_NAME(__format)::__failed_to_parse_format_spec();
+2110c2107
+< 	  auto [__ptr, __ec] = std::to_chars(__buf + 2, std::end(__buf),
+---
+> 	  auto [__ptr, __ec] = std::CXX20_FORMAT_NAMESPACE::CXX20_FORMAT_DECORATE_NAME(__to_chars)(__buf + 2, std::end(__buf),
+2115,2116c2112,2113
+< #if _GLIBCXX_P2518R3
+< 	  if (_M_spec._M_type == __format::_Pres_P)
+---
+> #if CXX20_P2518R3
+> 	  if (_M_spec._M_type == CXX20_FORMAT_DECORATE_NAME(__format)::_Pres_P)
+2140c2137
+< #if _GLIBCXX_P2518R3
+---
+> #if CXX20_P2518R3
+2145c2142
+< 		return __format::__write(__fc.out(), __str);
+---
+> 		return CXX20_FORMAT_DECORATE_NAME(__format)::__write(__fc.out(), __str);
+2149c2146
+< 	      __out = __format::__write(std::move(__out), __str.substr(0, 2));
+---
+> 	      __out = CXX20_FORMAT_DECORATE_NAME(__format)::__write(std::move(__out), __str.substr(0, 2));
+2152,2153c2149,2150
+< 	      return __format::__write_padded(std::move(__out), __str,
+< 					      __format::_Align_right,
+---
+> 	      return CXX20_FORMAT_DECORATE_NAME(__format)::__write_padded(std::move(__out), __str,
+> 					      CXX20_FORMAT_DECORATE_NAME(__format)::_Align_right,
+2158,2159c2155,2156
+< 	  return __format::__write_padded_as_spec(__str, __n, __fc, _M_spec,
+< 						  __format::_Align_right);
+---
+> 	  return CXX20_FORMAT_DECORATE_NAME(__format)::__write_padded_as_spec(__str, __n, __fc, _M_spec,
+> 						  CXX20_FORMAT_DECORATE_NAME(__format)::_Align_right);
+2163c2160
+<       __format::_Spec<_CharT> _M_spec{};
+---
+>       CXX20_FORMAT_DECORATE_NAME(__format)::_Spec<_CharT> _M_spec{};
+2166c2163
+<   template<__format::__char _CharT>
+---
+>   template<CXX20_FORMAT_DECORATE_NAME(__format)::__char _CharT>
+2185c2182
+<   template<__format::__char _CharT>
+---
+>   template<CXX20_FORMAT_DECORATE_NAME(__format)::__char _CharT>
+2207c2204
+< namespace __format
+---
+> namespace CXX20_FORMAT_DECORATE_NAME(__format)
+2249c2246
+<       = __format::__formattable_impl<remove_reference_t<_Tp>, _CharT>;
+---
+>       = CXX20_FORMAT_DECORATE_NAME(__format)::__formattable_impl<remove_reference_t<_Tp>, _CharT>;
+2254c2251
+< namespace __format
+---
+> namespace CXX20_FORMAT_DECORATE_NAME(__format)
+2278c2275
+< namespace __format
+---
+> namespace CXX20_FORMAT_DECORATE_NAME(__format)
+2678c2675
+< #elif _GLIBCXX_FORMAT_F128 == 2
+---
+> #elif CXX20_FORMAT_FORMAT_F128 == 2
+2734c2731
+< #if _GLIBCXX_FORMAT_F128 == 2
+---
+> #if CXX20_FORMAT_FORMAT_F128 == 2
+2781c2778
+< 	  = __format::__formattable_with<_Tp, _Context>;
+---
+> 	  = CXX20_FORMAT_DECORATE_NAME(__format)::__formattable_with<_Tp, _Context>;
+2784c2781
+<       class handle : public __format::_Arg_value<_Context>::_HandleBase
+---
+>       class handle : public CXX20_FORMAT_DECORATE_NAME(__format)::_Arg_value<_Context>::_HandleBase
+2786c2783
+< 	using _Base = typename __format::_Arg_value<_Context>::_HandleBase;
+---
+> 	using _Base = typename CXX20_FORMAT_DECORATE_NAME(__format)::_Arg_value<_Context>::_HandleBase;
+2791c2788
+< 	    = __conditional_t<__format::__formattable_with<_Tp, _Context>,
+---
+> 	    = __conditional_t<CXX20_FORMAT_DECORATE_NAME(__format)::__formattable_with<_Tp, _Context>,
+2810c2807
+< 	    if constexpr (!__format::__formattable_with<const _Tp, _Context>)
+---
+> 	    if constexpr (!CXX20_FORMAT_DECORATE_NAME(__format)::__formattable_with<const _Tp, _Context>)
+2837c2834
+<       basic_format_arg() noexcept : _M_type(__format::_Arg_none) { }
+---
+>       basic_format_arg() noexcept : _M_type(CXX20_FORMAT_DECORATE_NAME(__format)::_Arg_none) { }
+2841c2838
+<       { return _M_type != __format::_Arg_none; }
+---
+>       { return _M_type != CXX20_FORMAT_DECORATE_NAME(__format)::_Arg_none; }
+2848c2845
+< 	friend class __format::_Arg_store;
+---
+> 	friend class CXX20_FORMAT_DECORATE_NAME(__format)::_Arg_store;
+2850c2847
+<       static_assert(is_trivially_copyable_v<__format::_Arg_value<_Context>>);
+---
+>       static_assert(is_trivially_copyable_v<CXX20_FORMAT_DECORATE_NAME(__format)::_Arg_value<_Context>>);
+2852,2853c2849,2850
+<       __format::_Arg_value<_Context> _M_val;
+<       __format::_Arg_t _M_type;
+---
+>       CXX20_FORMAT_DECORATE_NAME(__format)::_Arg_value<_Context> _M_val;
+>       CXX20_FORMAT_DECORATE_NAME(__format)::_Arg_t _M_type;
+2921c2918
+< #if _GLIBCXX_FORMAT_F128
+---
+> #if CXX20_FORMAT_FORMAT_F128
+2924c2921
+< 	    return type_identity<__format::__float128_t>();
+---
+> 	    return type_identity<CXX20_FORMAT_DECORATE_NAME(__format)::__float128_t>();
+2928c2925
+< 	    return type_identity<__format::__float128_t>();
+---
+> 	    return type_identity<CXX20_FORMAT_DECORATE_NAME(__format)::__float128_t>();
+2953c2950
+< 	static consteval __format::_Arg_t
+---
+> 	static consteval CXX20_FORMAT_DECORATE_NAME(__format)::_Arg_t
+2956c2953
+< 	  using namespace __format;
+---
+> 	  using namespace CXX20_FORMAT_DECORATE_NAME(__format);
+3006,3007c3003,3004
+< #if _GLIBCXX_FORMAT_F128 == 2
+< 	  else if constexpr (is_same_v<_Tp, __format::__float128_t>)
+---
+> #if CXX20_FORMAT_FORMAT_F128 == 2
+> 	  else if constexpr (is_same_v<_Tp, CXX20_FORMAT_DECORATE_NAME(__format)::__float128_t>)
+3023c3020
+< 	requires __format::__formattable_with<_Tp, _Context>
+---
+> 	requires CXX20_FORMAT_DECORATE_NAME(__format)::__formattable_with<_Tp, _Context>
+3044c3041
+< 	_M_visit(_Visitor&& __vis, __format::_Arg_t __type)
+---
+> 	_M_visit(_Visitor&& __vis, CXX20_FORMAT_DECORATE_NAME(__format)::_Arg_t __type)
+3046c3043
+< 	  using namespace __format;
+---
+> 	  using namespace CXX20_FORMAT_DECORATE_NAME(__format);
+3097c3094
+< #if _GLIBCXX_FORMAT_F128 == 2
+---
+> #if CXX20_FORMAT_FORMAT_F128 == 2
+3114c3111
+< namespace __format
+---
+> namespace CXX20_FORMAT_DECORATE_NAME(__format)
+3123c3120
+< 	  __format::__invalid_arg_id_in_format_string();
+---
+> 	  CXX20_FORMAT_DECORATE_NAME(__format)::__invalid_arg_id_in_format_string();
+3167c3164
+<       static_assert( __format::_Arg_max_ <= (1 << _S_packed_type_bits) );
+---
+>       static_assert( CXX20_FORMAT_DECORATE_NAME(__format)::_Arg_max_ <= (1 << _S_packed_type_bits) );
+3170c3167
+< 	using _Store = __format::_Arg_store<_Context, _Args...>;
+---
+> 	using _Store = CXX20_FORMAT_DECORATE_NAME(__format)::_Arg_store<_Context, _Args...>;
+3173c3170
+< 	friend class __format::_Arg_store;
+---
+> 	friend class CXX20_FORMAT_DECORATE_NAME(__format)::_Arg_store;
+3177c3174
+<       using _Format_arg_val = __format::_Arg_value<_Context>;
+---
+>       using _Format_arg_val = CXX20_FORMAT_DECORATE_NAME(__format)::_Arg_value<_Context>;
+3195c3192
+<       typename __format::_Arg_t
+---
+>       typename CXX20_FORMAT_DECORATE_NAME(__format)::_Arg_t
+3199c3196
+< 	return static_cast<__format::_Arg_t>(__t & _S_packed_type_mask);
+---
+> 	return static_cast<CXX20_FORMAT_DECORATE_NAME(__format)::_Arg_t>(__t & _S_packed_type_mask);
+3208c3205
+< 	static consteval array<__format::_Arg_t, sizeof...(_Args)>
+---
+> 	static consteval array<CXX20_FORMAT_DECORATE_NAME(__format)::_Arg_t, sizeof...(_Args)>
+3237c3234
+<     basic_format_args(__format::_Arg_store<_Context, _Args...>)
+---
+>     basic_format_args(CXX20_FORMAT_DECORATE_NAME(__format)::_Arg_store<_Context, _Args...>)
+3246c3243
+<     class __format::_Arg_store
+---
+>     class CXX20_FORMAT_DECORATE_NAME(__format)::_Arg_store
+3261c3258
+< 			  __format::_Arg_value<_Context>,
+---
+> 			  CXX20_FORMAT_DECORATE_NAME(__format)::_Arg_value<_Context>,
+3286c3283
+<     class __format::_Arg_store<_Context>
+---
+>     class CXX20_FORMAT_DECORATE_NAME(__format)::_Arg_store<_Context>
+3306c3303
+< 	      = __format::__pack_arg_types<_S_packed_type_bits>(_S_types_to_pack<_Args...>());
+---
+> 	      = CXX20_FORMAT_DECORATE_NAME(__format)::__pack_arg_types<_S_packed_type_bits>(_S_types_to_pack<_Args...>());
+3328c3325
+<       using _Store = __format::_Arg_store<_Context, typename _Fmt_arg::template
+---
+>       using _Store = CXX20_FORMAT_DECORATE_NAME(__format)::_Arg_store<_Context, typename _Fmt_arg::template
+3341c3338
+< namespace __format
+---
+> namespace CXX20_FORMAT_DECORATE_NAME(__format)
+3366c3363
+<       __format::_Optional_locale _M_loc;
+---
+>       CXX20_FORMAT_DECORATE_NAME(__format)::_Optional_locale _M_loc;
+3380c3377
+< 	__format::__do_vformat_to(_Out2, basic_string_view<_CharT2>,
+---
+> 	CXX20_FORMAT_DECORATE_NAME(__format)::__do_vformat_to(_Out2, basic_string_view<_CharT2>,
+3409c3406
+< namespace __format
+---
+> namespace CXX20_FORMAT_DECORATE_NAME(__format)
+3417c3414
+<       __ctx.advance_to(__format::__write(__ctx.out()));
+---
+>       __ctx.advance_to(CXX20_FORMAT_DECORATE_NAME(__format)::__write(__ctx.out()));
+3468c3465
+< 		  __format::__unmatched_left_brace_in_format_string();
+---
+> 		  CXX20_FORMAT_DECORATE_NAME(__format)::__unmatched_left_brace_in_format_string();
+3491c3488
+< 		  __format::__unmatched_right_brace_in_format_string();
+---
+> 		  CXX20_FORMAT_DECORATE_NAME(__format)::__unmatched_right_brace_in_format_string();
+3523c3520
+< 	    auto [__i, __ptr] = __format::__parse_arg_id(begin(), end());
+---
+> 	    auto [__i, __ptr] = CXX20_FORMAT_DECORATE_NAME(__format)::__parse_arg_id(begin(), end());
+3525c3522
+< 	      __format::__invalid_arg_id_in_format_string();
+---
+> 	      CXX20_FORMAT_DECORATE_NAME(__format)::__invalid_arg_id_in_format_string();
+3560c3557
+< 	_M_fc.advance_to(__format::__write(_M_fc.out(), __str));
+---
+> 	_M_fc.advance_to(CXX20_FORMAT_DECORATE_NAME(__format)::__write(_M_fc.out(), __str));
+3573c3570
+< 	    __format::__invalid_arg_id_in_format_string();
+---
+> 	    CXX20_FORMAT_DECORATE_NAME(__format)::__invalid_arg_id_in_format_string();
+3583c3580
+< 	    static_assert(__format::__formattable_with<_Type, _Context>);
+---
+> 	    static_assert(CXX20_FORMAT_DECORATE_NAME(__format)::__formattable_with<_Type, _Context>);
+3670c3667
+< 	__format::_Checking_scanner<_CharT, remove_cvref_t<_Args>...>
+---
+> 	CXX20_FORMAT_DECORATE_NAME(__format)::_Checking_scanner<_CharT, remove_cvref_t<_Args>...>
+3681c3678
+<     { return __format::__do_vformat_to(std::move(__out), __fmt, __args); }
+---
+>     { return CXX20_FORMAT_DECORATE_NAME(__format)::__do_vformat_to(std::move(__out), __fmt, __args); }
+3687c3684
+<     { return __format::__do_vformat_to(std::move(__out), __fmt, __args); }
+---
+>     { return CXX20_FORMAT_DECORATE_NAME(__format)::__do_vformat_to(std::move(__out), __fmt, __args); }
+3694c3691
+<     { return __format::__do_vformat_to(std::move(__out), __fmt, __args, &__loc); }
+---
+>     { return CXX20_FORMAT_DECORATE_NAME(__format)::__do_vformat_to(std::move(__out), __fmt, __args, &__loc); }
+3701c3698
+<     { return __format::__do_vformat_to(std::move(__out), __fmt, __args, &__loc); }
+---
+>     { return CXX20_FORMAT_DECORATE_NAME(__format)::__do_vformat_to(std::move(__out), __fmt, __args, &__loc); }
+3707c3704
+<     __format::_Str_sink<char> __buf;
+---
+>     CXX20_FORMAT_DECORATE_NAME(__format)::_Str_sink<char> __buf;
+3716c3713
+<     __format::_Str_sink<wchar_t> __buf;
+---
+>     CXX20_FORMAT_DECORATE_NAME(__format)::_Str_sink<wchar_t> __buf;
+3725c3722
+<     __format::_Str_sink<char> __buf;
+---
+>     CXX20_FORMAT_DECORATE_NAME(__format)::_Str_sink<char> __buf;
+3734c3731
+<     __format::_Str_sink<wchar_t> __buf;
+---
+>     CXX20_FORMAT_DECORATE_NAME(__format)::_Str_sink<wchar_t> __buf;
+3815c3812
+<       __format::_Iter_sink<char, _Out> __sink(std::move(__out), __n);
+---
+>       CXX20_FORMAT_DECORATE_NAME(__format)::_Iter_sink<char, _Out> __sink(std::move(__out), __n);
+3827c3824
+<       __format::_Iter_sink<wchar_t, _Out> __sink(std::move(__out), __n);
+---
+>       CXX20_FORMAT_DECORATE_NAME(__format)::_Iter_sink<wchar_t, _Out> __sink(std::move(__out), __n);
+3839c3836
+<       __format::_Iter_sink<char, _Out> __sink(std::move(__out), __n);
+---
+>       CXX20_FORMAT_DECORATE_NAME(__format)::_Iter_sink<char, _Out> __sink(std::move(__out), __n);
+3851c3848
+<       __format::_Iter_sink<wchar_t, _Out> __sink(std::move(__out), __n);
+---
+>       CXX20_FORMAT_DECORATE_NAME(__format)::_Iter_sink<wchar_t, _Out> __sink(std::move(__out), __n);
+3858c3855
+< namespace __format
+---
+> namespace CXX20_FORMAT_DECORATE_NAME(__format)
+3909c3906
+<       __format::_Counting_sink<char> __buf;
+---
+>       CXX20_FORMAT_DECORATE_NAME(__format)::_Counting_sink<char> __buf;
+3920c3917
+<       __format::_Counting_sink<wchar_t> __buf;
+---
+>       CXX20_FORMAT_DECORATE_NAME(__format)::_Counting_sink<wchar_t> __buf;
+3932c3929
+<       __format::_Counting_sink<char> __buf;
+---
+>       CXX20_FORMAT_DECORATE_NAME(__format)::_Counting_sink<char> __buf;
+3944c3941
+<       __format::_Counting_sink<wchar_t> __buf;
+---
+>       CXX20_FORMAT_DECORATE_NAME(__format)::_Counting_sink<wchar_t> __buf;
+4001c3998
+< namespace __format
+---
+> namespace CXX20_FORMAT_DECORATE_NAME(__format)
+4015c4012
+<     : __format::__range_default_formatter<format_kind<_Rg>, _Rg, _CharT>
+---
+>     : CXX20_FORMAT_DECORATE_NAME(__format)::__range_default_formatter<format_kind<_Rg>, _Rg, _CharT>
+4019c4016
+< _GLIBCXX_END_NAMESPACE_VERSION
+---
+> } // namespace CXX20_FORMAT_NAMESPACE
+4022c4019
+< #endif // _GLIBCXX_FORMAT
+---
+> #endif // CXX20_FORMAT_H

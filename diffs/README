@@ -1,0 +1,4 @@
+This directory contains diffs for the files taken from the corresponding files
+in libstdc++. The diffs are based on tag releases/gcc-13.2.0 of
+https://gcc.gnu.org/git/gcc.git. The exact commit is
+c891d8dc23e1a46ad9f3e757d09e57b500d40044.
