@@ -3242,11 +3242,11 @@ namespace CXX20_FORMAT_DECORATE_NAME(__format)
   template<typename _Context, typename... _Args>
     class CXX20_FORMAT_DECORATE_NAME(__format)::_Arg_store
     {
-      friend std::basic_format_args<_Context>;
+      friend std::CXX20_FORMAT_NAMESPACE::basic_format_args<_Context>;
 
       template<typename _Ctx, typename... _Argz>
 	friend auto
-	std::make_format_args(_Argz&&...) noexcept;
+	std::CXX20_FORMAT_NAMESPACE::make_format_args(_Argz&&...) noexcept;
 
       // For a sufficiently small number of arguments we only store values.
       // basic_format_args can get the types from the _Args pack.
