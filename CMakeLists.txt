@@ -86,6 +86,7 @@ target_compile_options(
 	PRIVATE
 		$<$<CXX_COMPILER_ID:GNU,Clang>:-fsized-deallocation>
 		$<$<CXX_COMPILER_ID:GNU,Clang>:-Wno-old-style-cast>
+		$<$<CXX_COMPILER_ID:GNU,Clang>:-Wno-vla-cxx-extension>
 )
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_20)
